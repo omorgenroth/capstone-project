@@ -1,23 +1,28 @@
 ---
 name: User Story
 about: Describe this issue template's purpose here.
-title: Story
+title: ''
 labels: ''
 assignees: omorgenroth
 
 ---
 
-## Value Statement 
-As a **(role)**, 
- I need **(an action)**,  so that **(a benefit)**. 
+As a **User**, 
+ I need ** **, 
+ so that ****. 
 
-  ## Description 
+### Description 
 (Text, Scribble, Wireframe, Design)
 
-  ## Acceptance Criteria
- - [ ] (functional descriptions)
+### Acceptance Criteria
 
-  ## Tasks 
-- [ ] (todos for the team)
+- 
 
-  ## Complexity (small, medium, large) 
+### Tasks 
+- [ ] 
+
+
+### Complexity 
+- small
+- medium
+- large
