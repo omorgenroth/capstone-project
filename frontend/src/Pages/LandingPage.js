@@ -1,9 +1,13 @@
 import styled from 'styled-components/macro'
+import { FaPlus } from 'react-icons/fa'
 
 export default function LandingPage() {
   return (
     <LandingPageStyled>
-      <Button> Start </Button>
+      <Button>
+        Start
+        <FaPlus />
+      </Button>
     </LandingPageStyled>
   )
 }
@@ -21,7 +25,6 @@ const Button = styled.button`
 `
 
 const LandingPageStyled = styled.div`
-  background-color: var(--c-green);
   max-width: 100%;
   height: 100vh;
   display: grid;
