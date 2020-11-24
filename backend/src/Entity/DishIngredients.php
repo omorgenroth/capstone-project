@@ -39,17 +39,17 @@ class DishIngredients
         return $this->id;
     }
 
-    public function getDish(): ?Dish
-    {
-        return $this->dish;
-    }
+    // public function getDish(): ?Dish
+    // {
+    //     return $this->dish;
+    // }
 
-    public function setDish(?Dish $dish): self
-    {
-        $this->dish = $dish;
+    // public function setDish(?Dish $dish): self
+    // {
+    //     $this->dish = $dish;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getIngredient(): ?Ingredient
     {
