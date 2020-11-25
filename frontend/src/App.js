@@ -1,32 +1,37 @@
 import LandingPage from './Pages/LandingPage'
-import DishItem from './Components/DishItem'
 import getAllDishes from './services/getAllDishes'
 import { useEffect, useState } from 'react'
+import { Switch, Route, useHistory } from 'react-router-dom'
 import DishOverview from './Pages/DishOverview'
 
 function App() {
-  const [fetchedData, setFetchedData] = useState([])
   const [dishes, setDishes] = useState([])
+  let history = useHistory()
 
   useEffect(() => {
-    getAllDishes().then((data) => setFetchedData(data))
+    getAllDishes().then((data) => setDishes(addIsCheckedValue(data)))
   }, [])
+
+  return (
+    <div className="App">
+      <Switch>
+        <Route exact path="/">
+          <LandingPage onClickStart={showDishesOverview} />
+        </Route>
+        <Route path="/dishes">
+          <DishOverview dishes={dishes} />
+        </Route>
+      </Switch>
+    </div>
+  )
 
   function addIsCheckedValue(data) {
     return data.map((o) => ({ ...o, isChecked: false }))
   }
 
   function showDishesOverview() {
-    setDishes(addIsCheckedValue(fetchedData))
+    history.push('/dishes')
   }
-
-  return (
-    <div className="App">
-      <DishOverview dishes={dishes} />
-
-      <LandingPage onClickStart={showDishesOverview} />
-    </div>
-  )
 }
 
 export default App
