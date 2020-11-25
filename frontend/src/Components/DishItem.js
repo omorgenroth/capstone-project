@@ -5,27 +5,36 @@ export default function DishItem({ name, isChecked }) {
   return (
     <ItemWrapper>
       <div>
-        <h2> {name}</h2>
-        <p> Tomaten, Hackfleisch, Karotten</p>
+        <h3> {name}</h3>
+        <p> Ingredient1, Ingredient2, Ingredient3 </p>
       </div>
-      <div>
-        <CheckedIcon isChecked={isChecked} />
-        <UncheckedIcon isChecked={isChecked} />
-      </div>
+      <IconWrapper>
+        <CheckedIcon checked={isChecked} />
+        <UncheckedIcon checked={isChecked} />
+      </IconWrapper>
     </ItemWrapper>
   )
 }
 
 const ItemWrapper = styled.div`
-  background-color: var(--c-white);
-  box-shadow: 0, 3px, 6px, rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
+  background-color: ${(props) => (props.checked ? 'blue' : 'var(--c-white)')};
+  box-shadow: 0, 3px, 6px, rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
   font-size: 0.5rem;
   padding: 4px 4px 4px 10px;
-  display: flex;
-  width: 200px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  width: 85%;
   height: 60px;
   position: relative;
+`
+
+const ContentWrapper = styled.div`
+  grid-column: 1/2;
+`
+
+const IconWrapper = styled.div`
+  grid-column: 2/3;
 `
 
 const CheckedIcon = styled(FaCheckCircle)`
@@ -34,7 +43,7 @@ const CheckedIcon = styled(FaCheckCircle)`
   position: absolute;
   top: 25px;
   right: 30px;
-  display: ${(props) => (props.isChecked ? 'block' : 'none')};
+  display: ${(props) => (props.checked ? 'block' : 'none')};
 `
 const UncheckedIcon = styled(FaRegCircle)`
   color: var(--c-gray);
@@ -42,5 +51,5 @@ const UncheckedIcon = styled(FaRegCircle)`
   position: absolute;
   top: 25px;
   right: 30px;
-  display: ${(props) => (props.isChecked ? 'none' : 'block')};
+  display: ${(props) => (props.checked ? 'none' : 'block')};
 `
