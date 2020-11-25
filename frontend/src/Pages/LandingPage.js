@@ -1,10 +1,10 @@
 import styled from 'styled-components/macro'
 import { FaPlus } from 'react-icons/fa'
 
-export default function LandingPage() {
+export default function LandingPage({ onClickStart }) {
   return (
     <LandingPageStyled>
-      <Button>
+      <Button onClick={onClickStart}>
         Start
         <FaPlus />
       </Button>
@@ -29,7 +29,6 @@ const LandingPageStyled = styled.div`
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
-  grid-auto-columns;
 `
 
 //TODO Refactor CSS

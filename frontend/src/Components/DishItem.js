@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro'
 import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
 
-export default function DishItem({ name, ingredients, isChecked }) {
+export default function DishItem({ name, isChecked }) {
   return (
     <ItemWrapper>
       <div>
-        <h2> Spaghetti Bolognese</h2>
+        <h2> {name}</h2>
         <p> Tomaten, Hackfleisch, Karotten</p>
       </div>
       <div>
