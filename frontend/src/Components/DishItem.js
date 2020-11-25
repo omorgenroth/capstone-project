@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
 DishItem.propTypes = {
-  name: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
   isChecked: PropTypes.bool,
 }
 
@@ -15,8 +15,11 @@ export default function DishItem({ name, isChecked }) {
         <p> Ingredient1, Ingredient2, Ingredient3 </p>
       </ContentWrapper>
       <IconWrapper>
-        <CheckedIcon checked={isChecked} />
-        <UncheckedIcon checked={isChecked} />
+        {isChecked ? (
+          <CheckedIcon data-testid="checked" checked={isChecked} />
+        ) : (
+          <UncheckedIcon data-testid="unchecked" checked={isChecked} />
+        )}
       </IconWrapper>
     </ItemWrapper>
   )
@@ -52,7 +55,6 @@ const CheckedIcon = styled(FaCheckCircle)`
   position: absolute;
   top: 25px;
   right: 30px;
-  display: ${(props) => (props.checked ? 'block' : 'none')};
 `
 const UncheckedIcon = styled(FaRegCircle)`
   color: var(--c-gray);
@@ -60,5 +62,4 @@ const UncheckedIcon = styled(FaRegCircle)`
   position: absolute;
   top: 25px;
   right: 30px;
-  display: ${(props) => (props.checked ? 'none' : 'block')};
 `

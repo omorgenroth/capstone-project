@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
-export default function LandingPage({ onClickStart }) {
+export default function LandingPage() {
   return (
     <LandingPageStyled>
       <LinkStyled to="/dishes"> Start </LinkStyled>
