@@ -23,11 +23,9 @@ const ItemWrapper = styled.div`
   font-size: 0.5rem;
   padding: 4px 4px 4px 10px;
   display: flex;
-  width: 250px;
+  width: 200px;
   height: 60px;
   position: relative;
-  margin-top: 20px;
-  margin-left: 20px;
 `
 
 const CheckedIcon = styled(FaCheckCircle)`
