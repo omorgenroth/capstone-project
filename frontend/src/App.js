@@ -1,12 +1,11 @@
+import { useEffect, useState } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import DishOverviewPage from './Pages/DishOverviewPage'
 import LandingPage from './Pages/LandingPage'
 import getAllDishes from './services/getAllDishes'
-import { useEffect, useState } from 'react'
-import { Switch, Route, useHistory } from 'react-router-dom'
-import DishOverview from './Pages/DishOverview'
 
 function App() {
   const [dishes, setDishes] = useState([])
-  let history = useHistory()
 
   useEffect(() => {
     getAllDishes().then((data) => setDishes(addIsCheckedValue(data)))
@@ -16,10 +15,10 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LandingPage onClickStart={showDishesOverview} />
+          <LandingPage />
         </Route>
         <Route path="/dishes">
-          <DishOverview dishes={dishes} />
+          <DishOverviewPage dishes={dishes} />
         </Route>
       </Switch>
     </div>
@@ -27,10 +26,6 @@ function App() {
 
   function addIsCheckedValue(data) {
     return data.map((o) => ({ ...o, isChecked: false }))
-  }
-
-  function showDishesOverview() {
-    history.push('/dishes')
   }
 }
 

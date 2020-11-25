@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
-import { Link } from 'react-router-dom'
 
 export default function DishOverview({ dishes }) {
   return (
@@ -28,7 +27,7 @@ const Header = styled.div`
   justify-content: space-evenly;
   z-index: 10;
   background-color: var(--c-white);
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 15px 15px;
   position: sticky;
   top: 0;
 `

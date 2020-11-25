@@ -1,13 +1,19 @@
-import styled from 'styled-components/macro'
 import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
+import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
+
+DishItem.propTypes = {
+  name: PropTypes.object.isRequired,
+  isChecked: PropTypes.bool,
+}
 
 export default function DishItem({ name, isChecked }) {
   return (
     <ItemWrapper>
-      <div>
-        <h3> {name}</h3>
+      <ContentWrapper>
+        <Title> {name}</Title>
         <p> Ingredient1, Ingredient2, Ingredient3 </p>
-      </div>
+      </ContentWrapper>
       <IconWrapper>
         <CheckedIcon checked={isChecked} />
         <UncheckedIcon checked={isChecked} />
@@ -27,6 +33,9 @@ const ItemWrapper = styled.div`
   width: 85%;
   height: 60px;
   position: relative;
+`
+const Title = styled.h2`
+  font-size: 1.5em;
 `
 
 const ContentWrapper = styled.div`
