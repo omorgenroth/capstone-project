@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
 
-export default function DishOverview({ dishes }) {
+export default function DishOverview({ dishes, onToggleItem }) {
   return (
     <Wrapper>
       <Header>
@@ -12,11 +12,29 @@ export default function DishOverview({ dishes }) {
       <Grid>
         {dishes &&
           dishes.map(({ id, name, isChecked }) => {
-            return <DishItem key={id} name={name} isChecked={isChecked} />
+            return (
+              <DishItem
+                key={id}
+                id={id}
+                title={name}
+                isChecked={isChecked}
+                onSelect={handleToggle}
+              />
+            )
           })}
       </Grid>
     </Wrapper>
   )
+
+  function handleToggle(id) {
+    const elIndex = dishes.findIndex((el) => el.id === id)
+    let newDishes = [...dishes]
+    newDishes[elIndex] = {
+      ...newDishes[elIndex],
+      isChecked: !newDishes[elIndex].isChecked,
+    }
+    onToggleItem(newDishes)
+  }
 }
 
 const Wrapper = styled.div``

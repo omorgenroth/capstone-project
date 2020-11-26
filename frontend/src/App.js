@@ -11,6 +11,8 @@ function App() {
     getAllDishes().then((data) => setDishes(addIsCheckedValue(data)))
   }, [])
 
+  console.log(dishes)
+
   return (
     <div className="App">
       <Switch>
@@ -18,14 +20,17 @@ function App() {
           <LandingPage />
         </Route>
         <Route path="/dishes">
-          <DishOverviewPage dishes={dishes} />
+          <DishOverviewPage
+            dishes={dishes}
+            onToggleItem={(newDishes) => setDishes(newDishes)}
+          />
         </Route>
       </Switch>
     </div>
   )
 
   function addIsCheckedValue(data) {
-    return data.map((item) => ({ ...item, isChecked: true }))
+    return data.map((item) => ({ ...item, isChecked: false }))
   }
 }
 

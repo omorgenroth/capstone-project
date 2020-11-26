@@ -7,11 +7,11 @@ DishItem.propTypes = {
   isChecked: PropTypes.bool,
 }
 
-export default function DishItem({ name, isChecked }) {
+export default function DishItem({ id, title, isChecked, onSelect }) {
   return (
-    <ItemWrapper>
+    <ItemWrapper onClick={() => onSelect(id)}>
       <ContentWrapper>
-        <Title> {name}</Title>
+        <Title> {title}</Title>
         <p> Ingredient1, Ingredient2, Ingredient3 </p>
       </ContentWrapper>
       <IconWrapper>
