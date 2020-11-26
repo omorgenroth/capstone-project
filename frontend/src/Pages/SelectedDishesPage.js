@@ -40,7 +40,11 @@ export default function SelectedDishesPage({ dishes, onDeleteItem }) {
   }
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-rows: 60px auto;
+`
+//TODO make the Header a Component
 
 const Header = styled.div`
   display: flex;
@@ -50,8 +54,9 @@ const Header = styled.div`
   background-color: var(--c-white);
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
   border-radius: 0 0 15px 15px;
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
@@ -65,4 +70,5 @@ const Grid = styled.div`
   display: grid;
   grid-gap: 10px;
   padding: 10px;
+  grid-row: 2/3;
 `

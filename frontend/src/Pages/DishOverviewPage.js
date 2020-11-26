@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FaArrowRight } from 'react-icons/fa'
+import { FaChevronRight } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
 import PropTypes from 'prop-types'
@@ -39,7 +39,7 @@ export default function DishOverview({ dishes, onToggleItem }) {
       ) : (
         <>
           <Counter>{counter}</Counter>
-          <LinkOval to="/selected">
+          <LinkOval to="/dishes/selected">
             <ArrowIcon />
           </LinkOval>
         </>
@@ -62,6 +62,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: 60px auto;
 `
+//TODO make the Header a Component
 
 const Header = styled.div`
   display: flex;
@@ -102,7 +103,7 @@ const LinkOval = styled(Link)`
   right: 20px;
 `
 
-const ArrowIcon = styled(FaArrowRight)`
+const ArrowIcon = styled(FaChevronRight)`
   color: var(--c-gray);
   transform: scale(1.5);
   z-index: 2;

@@ -23,25 +23,23 @@ function App() {
 
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/dishes">
-          <DishOverviewPage
-            dishes={dishes}
-            onToggleItem={(newDishes) => setDishes(newDishes)}
-          />
-        </Route>
-        <Route path="/selected">
-          <SelectedDishesPage
-            dishes={selectedDishes}
-            onDeleteItem={(newSelectedDishes) =>
-              setSelectedDishes(newSelectedDishes)
-            }
-          />
-        </Route>
-      </Switch>
+      <Route exact path="/">
+        <LandingPage />
+      </Route>
+      <Route exact path="/dishes/selected">
+        <SelectedDishesPage
+          dishes={selectedDishes}
+          onDeleteItem={(newSelectedDishes) =>
+            setSelectedDishes(newSelectedDishes)
+          }
+        />
+      </Route>
+      <Route exact path="/dishes">
+        <DishOverviewPage
+          dishes={dishes}
+          onToggleItem={(newDishes) => setDishes(newDishes)}
+        />
+      </Route>
     </div>
   )
 
