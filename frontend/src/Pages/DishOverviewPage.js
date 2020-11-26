@@ -2,6 +2,12 @@ import { Link } from 'react-router-dom'
 import { FaArrowRight } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
+import PropTypes from 'prop-types'
+
+DishOverview.propTypes = {
+  dishes: PropTypes.array,
+  onToggleItem: PropTypes.func,
+}
 
 export default function DishOverview({ dishes, onToggleItem }) {
   let counter = dishes.filter((dish) => {
@@ -23,7 +29,7 @@ export default function DishOverview({ dishes, onToggleItem }) {
                 id={id}
                 title={name}
                 isSelected={isSelected}
-                onSelect={handleToggle}
+                onClick={handleToggle}
               />
             )
           })}

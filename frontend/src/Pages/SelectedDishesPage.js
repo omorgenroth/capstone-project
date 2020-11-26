@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
+import PropTypes from 'prop-types'
 
-export default function SelectedDishesPage({ dishes, onToggleItem }) {
+SelectedDishesPage.propTypes = {
+  dishes: PropTypes.array,
+  onDeleteItem: PropTypes.func,
+}
+
+export default function SelectedDishesPage({ dishes, onDeleteItem }) {
   return (
     <Wrapper>
       <Header>
@@ -18,7 +24,7 @@ export default function SelectedDishesPage({ dishes, onToggleItem }) {
                 id={id}
                 title={name}
                 isSelected={isSelected}
-                onSelect={handleToggle}
+                onClick={deleteItem}
               />
             )
           })}
@@ -26,14 +32,11 @@ export default function SelectedDishesPage({ dishes, onToggleItem }) {
     </Wrapper>
   )
 
-  function handleToggle(id) {
-    const elIndex = dishes.findIndex((el) => el.id === id)
-    let newDishes = [...dishes]
-    newDishes[elIndex] = {
-      ...newDishes[elIndex],
-      isSelected: !newDishes[elIndex].isSelected,
-    }
-    onToggleItem(newDishes)
+  function deleteItem(id) {
+    const newDishes = dishes.filter((dish) => {
+      return dish.id !== id
+    })
+    onDeleteItem(newDishes)
   }
 }
 

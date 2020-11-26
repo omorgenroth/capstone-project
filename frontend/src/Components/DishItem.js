@@ -9,9 +9,9 @@ DishItem.propTypes = {
   onSelect: PropTypes.func,
 }
 
-export default function DishItem({ id, title, isSelected, onSelect }) {
+export default function DishItem({ id, title, isSelected, onClick }) {
   return (
-    <ItemWrapper onClick={() => onSelect(id)} selected={isSelected}>
+    <ItemWrapper onClick={() => onClick(id)} selected={isSelected}>
       <ContentWrapper>
         <Title> {title}</Title>
       </ContentWrapper>
@@ -53,7 +53,7 @@ const IconWrapper = styled.div`
 `
 
 const CheckedIcon = styled(FaCheckCircle)`
-  color: var(--c-white);
+  color: var(--c-green);
   transform: scale(2);
   position: absolute;
   top: 25px;

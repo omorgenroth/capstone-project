@@ -36,7 +36,7 @@ function App() {
         <Route path="/selected">
           <SelectedDishesPage
             dishes={selectedDishes}
-            onToggleItem={(newSelectedDishes) =>
+            onDeleteItem={(newSelectedDishes) =>
               setSelectedDishes(newSelectedDishes)
             }
           />

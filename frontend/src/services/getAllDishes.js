@@ -5,3 +5,5 @@ export default async function getAllDishes() {
   const data = response.json()
   return data
 }
+
+// TODO catch und Test schreiben
