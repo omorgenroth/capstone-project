@@ -3,16 +3,13 @@ import { FaArrowRight } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
 
-export default function DishOverview({ dishes, onToggleItem }) {
-  let counter = dishes.filter((dish) => {
-    return dish.isSelected
-  }).length
-
+export default function SelectedDishesPage({ dishes, onToggleItem }) {
+  console.log(dishes)
   return (
     <Wrapper>
       <Header>
         <LinkStyled to="/">X</LinkStyled>
-        <p>Dish Overview</p>
+        <p>Your selection</p>
       </Header>
       <Grid>
         {dishes &&
@@ -28,16 +25,9 @@ export default function DishOverview({ dishes, onToggleItem }) {
             )
           })}
       </Grid>
-      {counter === 0 ? (
-        <></>
-      ) : (
-        <>
-          <Counter>{counter}</Counter>
-          <CreateButton to="/selected">
-            <ArrowIcon />
-          </CreateButton>
-        </>
-      )}
+      <CreateButton>
+        <ArrowIcon />
+      </CreateButton>
     </Wrapper>
   )
 
@@ -79,7 +69,7 @@ const Grid = styled.div`
   padding: 10px;
 `
 
-const CreateButton = styled(Link)`
+const CreateButton = styled.button`
   border-radius: 50%;
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
   border: none;
@@ -90,8 +80,6 @@ const CreateButton = styled(Link)`
   position: fixed;
   bottom: 60px;
   right: 20px;
-  padding: 0;
-  margin: 0;
 `
 
 const ArrowIcon = styled(FaArrowRight)`

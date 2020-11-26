@@ -2,14 +2,24 @@ import { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import DishOverviewPage from './Pages/DishOverviewPage'
 import LandingPage from './Pages/LandingPage'
+import SelectedDishesPage from './Pages/SelectedDishesPage'
 import getAllDishes from './services/getAllDishes'
 
 function App() {
   const [dishes, setDishes] = useState([])
+  const [selectedDishes, setSelectedDishes] = useState([])
 
   useEffect(() => {
-    getAllDishes().then((data) => setDishes(addisSelectedValue(data)))
+    getAllDishes().then((data) => setDishes(addIsSelectedValue(data)))
   }, [])
+
+  useEffect(() => {
+    setSelectedDishes(
+      dishes.filter((dish) => {
+        return dish.isSelected
+      })
+    )
+  }, [dishes])
 
   return (
     <div className="App">
@@ -23,11 +33,17 @@ function App() {
             onToggleItem={(newDishes) => setDishes(newDishes)}
           />
         </Route>
+        <Route path="/selected">
+          <SelectedDishesPage
+            dishes={selectedDishes}
+            onToggleItem={(newSelectedDishes) => setDishes(newSelectedDishes)}
+          />
+        </Route>
       </Switch>
     </div>
   )
 
-  function addisSelectedValue(data) {
+  function addIsSelectedValue(data) {
     return data.map((item) => ({ ...item, isSelected: false }))
   }
 }

@@ -11,16 +11,16 @@ DishItem.propTypes = {
 
 export default function DishItem({ id, title, isSelected, onSelect }) {
   return (
-    <ItemWrapper onClick={() => onSelect(id)}>
+    <ItemWrapper onClick={() => onSelect(id)} selected={isSelected}>
       <ContentWrapper>
         <Title> {title}</Title>
         <p> Ingredient1, Ingredient2, Ingredient3 </p>
       </ContentWrapper>
       <IconWrapper>
         {isSelected ? (
-          <CheckedIcon data-testid="checked" checked={isSelected} />
+          <CheckedIcon data-testid="checked" />
         ) : (
-          <UncheckedIcon data-testid="unchecked" checked={isSelected} />
+          <UncheckedIcon data-testid="unchecked" />
         )}
       </IconWrapper>
     </ItemWrapper>
@@ -28,8 +28,10 @@ export default function DishItem({ id, title, isSelected, onSelect }) {
 }
 
 const ItemWrapper = styled.div`
-  background-color: ${(props) => (props.checked ? 'blue' : 'var(--c-white)')};
+  background-color: ${(props) =>
+    props.selected ? 'var(--c-gray)' : 'var(--c-white)'};
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.03);
+  color: ${(props) => (props.selected ? 'var(--c-white)' : 'var(--c-gray)')};
   border-radius: 15px;
   font-size: 0.5rem;
   padding: 4px 4px 4px 10px;
@@ -52,7 +54,7 @@ const IconWrapper = styled.div`
 `
 
 const CheckedIcon = styled(FaCheckCircle)`
-  color: var(--c-gray);
+  color: var(--c-white);
   transform: scale(2);
   position: absolute;
   top: 25px;
