@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import DishOverviewPage from './Pages/DishOverviewPage'
+import LandingPage from './Pages/LandingPage'
+import getAllDishes from './services/getAllDishes'
 
 function App() {
+  const [dishes, setDishes] = useState([])
+
+  useEffect(() => {
+    getAllDishes().then((data) => setDishes(addIsCheckedValue(data)))
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="/dishes">
+          <DishOverviewPage dishes={dishes} />
+        </Route>
+      </Switch>
     </div>
-  );
+  )
+
+  function addIsCheckedValue(data) {
+    return data.map((item) => ({ ...item, isChecked: true }))
+  }
 }
 
-export default App;
+export default App
