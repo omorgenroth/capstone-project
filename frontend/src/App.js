@@ -25,7 +25,7 @@ function App() {
   )
 
   function addIsCheckedValue(data) {
-    return data.map((o) => ({ ...o, isChecked: true }))
+    return data.map((item) => ({ ...item, isChecked: true }))
   }
 }
 
