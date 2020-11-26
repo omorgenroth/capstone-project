@@ -8,10 +8,8 @@ function App() {
   const [dishes, setDishes] = useState([])
 
   useEffect(() => {
-    getAllDishes().then((data) => setDishes(addIsCheckedValue(data)))
+    getAllDishes().then((data) => setDishes(addisSelectedValue(data)))
   }, [])
-
-  console.log(dishes)
 
   return (
     <div className="App">
@@ -29,8 +27,8 @@ function App() {
     </div>
   )
 
-  function addIsCheckedValue(data) {
-    return data.map((item) => ({ ...item, isChecked: false }))
+  function addisSelectedValue(data) {
+    return data.map((item) => ({ ...item, isSelected: false }))
   }
 }
 

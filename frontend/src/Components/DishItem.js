@@ -3,11 +3,13 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
 DishItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  isChecked: PropTypes.bool,
+  id: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool,
+  onSelect: PropTypes.func,
 }
 
-export default function DishItem({ id, title, isChecked, onSelect }) {
+export default function DishItem({ id, title, isSelected, onSelect }) {
   return (
     <ItemWrapper onClick={() => onSelect(id)}>
       <ContentWrapper>
@@ -15,10 +17,10 @@ export default function DishItem({ id, title, isChecked, onSelect }) {
         <p> Ingredient1, Ingredient2, Ingredient3 </p>
       </ContentWrapper>
       <IconWrapper>
-        {isChecked ? (
-          <CheckedIcon data-testid="checked" checked={isChecked} />
+        {isSelected ? (
+          <CheckedIcon data-testid="checked" checked={isSelected} />
         ) : (
-          <UncheckedIcon data-testid="unchecked" checked={isChecked} />
+          <UncheckedIcon data-testid="unchecked" checked={isSelected} />
         )}
       </IconWrapper>
     </ItemWrapper>

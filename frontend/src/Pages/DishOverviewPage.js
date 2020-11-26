@@ -11,13 +11,13 @@ export default function DishOverview({ dishes, onToggleItem }) {
       </Header>
       <Grid>
         {dishes &&
-          dishes.map(({ id, name, isChecked }) => {
+          dishes.map(({ id, name, isSelected }) => {
             return (
               <DishItem
                 key={id}
                 id={id}
                 title={name}
-                isChecked={isChecked}
+                isSelected={isSelected}
                 onSelect={handleToggle}
               />
             )
@@ -31,7 +31,7 @@ export default function DishOverview({ dishes, onToggleItem }) {
     let newDishes = [...dishes]
     newDishes[elIndex] = {
       ...newDishes[elIndex],
-      isChecked: !newDishes[elIndex].isChecked,
+      isSelected: !newDishes[elIndex].isSelected,
     }
     onToggleItem(newDishes)
   }
