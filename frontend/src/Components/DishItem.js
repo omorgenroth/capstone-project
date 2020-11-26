@@ -29,7 +29,7 @@ export default function DishItem({ id, title, isSelected, onSelect }) {
 
 const ItemWrapper = styled.div`
   background-color: ${(props) => (props.checked ? 'blue' : 'var(--c-white)')};
-  box-shadow: 0, 3px, 6px, rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.03);
   border-radius: 15px;
   font-size: 0.5rem;
   padding: 4px 4px 4px 10px;

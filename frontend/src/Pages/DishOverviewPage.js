@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
+import { FaArrowRight } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
 
 export default function DishOverview({ dishes, onToggleItem }) {
+  let counter = dishes.filter((dish) => {
+    return dish.isSelected
+  }).length
+
   return (
     <Wrapper>
       <Header>
@@ -23,6 +28,16 @@ export default function DishOverview({ dishes, onToggleItem }) {
             )
           })}
       </Grid>
+      {counter === 0 ? (
+        <></>
+      ) : (
+        <>
+          <Counter>{counter}</Counter>
+          <CreateButton>
+            <ArrowIcon />
+          </CreateButton>
+        </>
+      )}
     </Wrapper>
   )
 
@@ -61,4 +76,38 @@ const Grid = styled.div`
   display: grid;
   grid-gap: 10px;
   padding: 10px;
+`
+
+const CreateButton = styled.button`
+  border-radius: 50%;
+  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
+  border: none;
+  width: 45px;
+  height: 45px;
+  z-index: 5;
+  background-color: var(--c-white);
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+`
+
+const ArrowIcon = styled(FaArrowRight)`
+  color: var(--c-gray);
+  transform: scale(1.5);
+  z-index: 2;
+`
+const Counter = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: var(--c-gray);
+  color: var(--c-white);
+  border-radius: 50%;
+  bottom: 95px;
+  right: 15px;
+  z-index: 4;
+  position: fixed;
+  font-size: 0.9rem;
+  display: grid;
+  place-items: center;
+  opacity: 0.6;
 `
