@@ -14,7 +14,6 @@ export default function DishItem({ id, title, isSelected, onSelect }) {
     <ItemWrapper onClick={() => onSelect(id)} selected={isSelected}>
       <ContentWrapper>
         <Title> {title}</Title>
-        <p> Ingredient1, Ingredient2, Ingredient3 </p>
       </ContentWrapper>
       <IconWrapper>
         {isSelected ? (

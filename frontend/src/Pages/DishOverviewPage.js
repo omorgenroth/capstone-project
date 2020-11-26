@@ -33,9 +33,9 @@ export default function DishOverview({ dishes, onToggleItem }) {
       ) : (
         <>
           <Counter>{counter}</Counter>
-          <CreateButton to="/selected">
+          <LinkOval to="/selected">
             <ArrowIcon />
-          </CreateButton>
+          </LinkOval>
         </>
       )}
     </Wrapper>
@@ -52,7 +52,10 @@ export default function DishOverview({ dishes, onToggleItem }) {
   }
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-rows: 60px auto;
+`
 
 const Header = styled.div`
   display: flex;
@@ -62,8 +65,9 @@ const Header = styled.div`
   background-color: var(--c-white);
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
   border-radius: 0 0 15px 15px;
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
 `
 const LinkStyled = styled(Link)`
   text-decoration: none;
@@ -77,12 +81,12 @@ const Grid = styled.div`
   display: grid;
   grid-gap: 10px;
   padding: 10px;
+  grid-row: 2/3;
 `
 
-const CreateButton = styled(Link)`
+const LinkOval = styled(Link)`
   border-radius: 50%;
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
-  border: none;
   width: 45px;
   height: 45px;
   z-index: 5;
@@ -90,15 +94,17 @@ const CreateButton = styled(Link)`
   position: fixed;
   bottom: 60px;
   right: 20px;
-  padding: 0;
-  margin: 0;
 `
 
 const ArrowIcon = styled(FaArrowRight)`
   color: var(--c-gray);
   transform: scale(1.5);
   z-index: 2;
+  position: fixed;
+  bottom: 73px;
+  right: 33px;
 `
+
 const Counter = styled.div`
   width: 30px;
   height: 30px;

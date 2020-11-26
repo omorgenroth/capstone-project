@@ -36,7 +36,9 @@ function App() {
         <Route path="/selected">
           <SelectedDishesPage
             dishes={selectedDishes}
-            onToggleItem={(newSelectedDishes) => setDishes(newSelectedDishes)}
+            onToggleItem={(newSelectedDishes) =>
+              setSelectedDishes(newSelectedDishes)
+            }
           />
         </Route>
       </Switch>
