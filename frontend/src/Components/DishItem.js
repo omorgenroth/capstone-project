@@ -3,8 +3,8 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
 DishItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  id: PropTypes.number,
+  title: PropTypes.string,
   isSelected: PropTypes.bool,
   onSelect: PropTypes.func,
 }

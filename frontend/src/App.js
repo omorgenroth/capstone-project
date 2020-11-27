@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import DishOverviewPage from './Pages/DishOverviewPage'
 import LandingPage from './Pages/LandingPage'
+import HomePage from './Pages/HomePage'
 import SelectedDishesPage from './Pages/SelectedDishesPage'
 import getAllDishes from './services/getAllDishes'
 
@@ -25,6 +26,9 @@ function App() {
     <div className="App">
       <Route exact path="/">
         <LandingPage />
+      </Route>
+      <Route path="/home">
+        <HomePage />
       </Route>
       <Route exact path="/dishes/selected">
         <SelectedDishesPage
