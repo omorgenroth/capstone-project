@@ -17,7 +17,7 @@ export default function DishOverview({ dishes, onToggleItem }) {
   return (
     <Wrapper>
       <Header>
-        <LinkStyled to="/">X</LinkStyled>
+        <LinkStyled to="/home">X</LinkStyled>
         <p>Dish Overview</p>
       </Header>
       <Grid>

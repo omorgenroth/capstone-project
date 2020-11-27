@@ -12,7 +12,7 @@ export default function SelectedDishesPage({ dishes, onDeleteItem }) {
   return (
     <Wrapper>
       <Header>
-        <LinkStyled to="/">X</LinkStyled>
+        <LinkStyled to="/home">X</LinkStyled>
         <p>Your selection</p>
       </Header>
       <Grid>
