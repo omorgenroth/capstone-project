@@ -1,11 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListItem renders correctly 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 {
+  font-size: 1rem;
+}
+
+.c1 {
+  color: var(--c-orange);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  margin-right: 5px;
+}
+
 <div
-  class="ListItem__ItemWrapper-u7slb1-0 dUuTci"
+  class="c0"
 >
   <svg
-    class="ListItem__DeleteIcon-u7slb1-2 guWRUH"
+    class="c1"
     fill="currentColor"
     height="1em"
     stroke="currentColor"
@@ -19,7 +38,7 @@ exports[`ListItem renders correctly 1`] = `
     />
   </svg>
   <div
-    class="ListItem__Title-u7slb1-1 dqgulE"
+    class="c2"
   >
     My Dish
   </div>
