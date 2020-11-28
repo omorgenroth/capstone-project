@@ -19,7 +19,6 @@ body {
     padding:0;
     margin:0;
     font-size: 112.5%;
-    background-color: var(--c-green);
     font-family: 'Comfortaa', cursive;
     color: var(--c-gray);
     

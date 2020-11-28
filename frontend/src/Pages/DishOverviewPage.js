@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FaChevronRight } from 'react-icons/fa'
+import { FaChevronRight, FaCheck } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
 import PropTypes from 'prop-types'
@@ -38,9 +38,8 @@ export default function DishOverview({ dishes, onToggleItem }) {
         <></>
       ) : (
         <>
-          <Counter>{counter}</Counter>
           <LinkOval to="/dishes/selected">
-            <ArrowIcon />
+            <Counter>{counter}</Counter>
           </LinkOval>
         </>
       )}
@@ -69,7 +68,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-evenly;
   z-index: 10;
-  background-color: var(--c-white);
+  background-color: var(--c-green);
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
   border-radius: 0 0 15px 15px;
   position: fixed;
@@ -86,8 +85,8 @@ const LinkStyled = styled(Link)`
 
 const Grid = styled.div`
   display: grid;
-  grid-gap: 10px;
-  padding: 10px;
+  grid-gap: 15px;
+  padding: 20px;
   grid-row: 2/3;
 `
 
@@ -97,16 +96,16 @@ const LinkOval = styled(Link)`
   width: 45px;
   height: 45px;
   z-index: 5;
-  background-color: var(--c-white);
+  background-color: #ff6e4a;
   position: fixed;
   bottom: 60px;
   right: 20px;
 `
 
-const ArrowIcon = styled(FaChevronRight)`
-  color: var(--c-gray);
-  transform: scale(1.5);
-  z-index: 2;
+const CheckIcon = styled(FaCheck)`
+  color: var(--c-white);
+  transform: scale(1);
+  z-index: 8;
   position: fixed;
   bottom: 73px;
   right: 33px;
@@ -115,15 +114,13 @@ const ArrowIcon = styled(FaChevronRight)`
 const Counter = styled.div`
   width: 30px;
   height: 30px;
-  background-color: var(--c-gray);
   color: var(--c-white);
   border-radius: 50%;
-  bottom: 95px;
-  right: 15px;
-  z-index: 4;
-  position: fixed;
-  font-size: 0.9rem;
+  z-index: 7;
+  font-size: 1rem;
   display: grid;
   place-items: center;
-  opacity: 0.6;
+  position: fixed;
+  bottom: 67px;
+  right: 27px;
 `

@@ -17,14 +17,15 @@ const HomePageStyled = styled.div`
   display: grid;
   place-items: center;
   grid-template-rows: repeat(3, 1fr);
+  background-color: var(--c-green);
 `
 
 const LinkStyled = styled(Link)`
-  background-color: var(--c-white);
+  background-color: #ff6e4a;
   text-decoration: none;
   border: none;
   border-radius: 15px;
-  color: var(--c-gray);
+  color: var(--c-white);
   padding: 10px;
   margin: 0 auto;
   cursor: pointer;
