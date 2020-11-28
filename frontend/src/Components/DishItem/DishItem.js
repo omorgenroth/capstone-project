@@ -1,4 +1,4 @@
-import { FaCheckCircle, FaRegCircle, FaMinus } from 'react-icons/fa'
+import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
@@ -63,13 +63,6 @@ const CheckedIcon = styled(FaCheckCircle)`
 const UncheckedIcon = styled(FaRegCircle)`
   color: var(--c-gray);
   transform: scale(2.5);
-  position: absolute;
-  top: 25px;
-  right: 30px;
-`
-const DeleteIcon = styled(FaMinus)`
-  color: var(--c-white);
-  transform: scale(2);
   position: absolute;
   top: 25px;
   right: 30px;

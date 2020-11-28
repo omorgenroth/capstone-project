@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DishItem renders correctly 1`] = `
+<div
+  class="DishItem__ItemWrapper-z449om-0 eeXLhz"
+>
+  <div
+    class="DishItem__ContentWrapper-z449om-2 llvuJR"
+  >
+    <p
+      class="DishItem__Title-z449om-1 ePudLn"
+    >
+       
+      My Dish
+    </p>
+  </div>
+  <div
+    class="DishItem__IconWrapper-z449om-3 fHpSxA"
+  >
+    <svg
+      class="DishItem__UncheckedIcon-z449om-5 bcwvWv"
+      data-testid="unchecked"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 512 512"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
+      />
+    </svg>
+  </div>
+</div>
+`;
