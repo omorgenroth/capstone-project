@@ -7,19 +7,19 @@ import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
 DishOverview.propTypes = {
   dishes: PropTypes.array,
   onToggleItem: PropTypes.func,
+  error: PropTypes.bool,
 }
 
-export default function DishOverview({ dishes, onToggleItem }) {
+export default function DishOverview({ dishes, onToggleItem, error }) {
   let counter = dishes.filter((dish) => {
     return dish.isSelected
   }).length
 
   return (
     <Wrapper>
-      <HeaderOverlay>
-        <p>Dish Overview</p>
-      </HeaderOverlay>
+      <HeaderOverlay>Dish Overview</HeaderOverlay>
       <Grid>
+        {error && <div> Couldn`t connect to Server</div>}
         {dishes &&
           dishes.map(({ id, name, isSelected }) => {
             return (
@@ -74,7 +74,7 @@ const LinkOval = styled(Link)`
   width: 45px;
   height: 45px;
   z-index: 5;
-  background-color: #var(--c-orange);
+  background-color: var(--c-orange);
   position: fixed;
   bottom: 60px;
   right: 20px;

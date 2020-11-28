@@ -10,10 +10,13 @@ function App() {
   const [dishes, setDishes] = useState([])
   const [selectedDishes, setSelectedDishes] = useState([])
   const [isLoading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     getAllDishes()
-      .then((data) => setDishes(addIsSelectedValue(data)))
+      .then((data) =>
+        data.error ? setError(true) : setDishes(addIsSelectedValue(data))
+      )
       .then(() => setLoading(false))
   }, [])
 
@@ -45,6 +48,7 @@ function App() {
         <DishOverviewPage
           dishes={dishes}
           onToggleItem={(newDishes) => setDishes(newDishes)}
+          error={error}
         />
       </Route>
     </div>

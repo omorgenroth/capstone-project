@@ -1,9 +1,11 @@
-const baseUrl = 'http://capstone.local/dishes'
+const baseUrl = 'http://capstoner.local/dishes'
 
 export default async function getAllDishes() {
-  const response = await fetch(baseUrl)
-  const data = response.json()
-  return data
+  try {
+    const response = await fetch(baseUrl)
+    const data = response.json()
+    return data
+  } catch (err) {
+    return { error: true }
+  }
 }
-
-// TODO catch und Test schreiben
