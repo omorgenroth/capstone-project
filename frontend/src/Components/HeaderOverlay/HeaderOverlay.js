@@ -10,7 +10,7 @@ export default function HeaderOverlay({ children }) {
   return (
     <HeaderStyled>
       <LinkStyled to="/home">X</LinkStyled>
-      {children}{' '}
+      {children}
     </HeaderStyled>
   )
 }
