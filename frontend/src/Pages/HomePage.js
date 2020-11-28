@@ -21,7 +21,7 @@ const HomePageStyled = styled.div`
 `
 
 const LinkStyled = styled(Link)`
-  background-color: #ff6e4a;
+  background-color: #var(--c-orange);
   text-decoration: none;
   border: none;
   border-radius: 15px;

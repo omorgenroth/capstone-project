@@ -29,7 +29,7 @@ const Title = styled.div`
 `
 
 const DeleteIcon = styled(FaMinusCircle)`
-  color: #ff6e4a;
+  color: #var(--c-orange);
   transform: scale(1);
   margin-right: 5px;
 `

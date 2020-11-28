@@ -74,7 +74,7 @@ const LinkOval = styled(Link)`
   width: 45px;
   height: 45px;
   z-index: 5;
-  background-color: #ff6e4a;
+  background-color: #var(--c-orange);
   position: fixed;
   bottom: 60px;
   right: 20px;

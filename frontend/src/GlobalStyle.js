@@ -6,6 +6,7 @@ export default createGlobalStyle`
     --c-green: rgb(147,226,202);
     --c-white: rgb(247,247,247);
     --c-gray: rgb(112,112,112);
+    --c-orange: rgb(255, 110, 74);
 }
 
 html {
