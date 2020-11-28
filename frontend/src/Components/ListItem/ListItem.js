@@ -1,5 +1,12 @@
-import styled from 'styled-components/macro'
 import { FaMinusCircle } from 'react-icons/fa'
+import styled from 'styled-components/macro'
+import PropTypes from 'prop-types'
+
+ListItem.propTypes = {
+  id: PropTypes.number,
+  title: PropTypes.string,
+  onDelete: PropTypes.func,
+}
 
 export default function ListItem({ id, title, onDelete }) {
   return (

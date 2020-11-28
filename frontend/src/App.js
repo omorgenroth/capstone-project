@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Route } from 'react-router-dom'
 import DishOverviewPage from './Pages/DishOverviewPage'
-import LandingPage from './Pages/LandingPage'
 import HomePage from './Pages/HomePage'
+import LandingPage from './Pages/LandingPage'
 import SelectedDishesPage from './Pages/SelectedDishesPage'
 import getAllDishes from './services/getAllDishes'
 

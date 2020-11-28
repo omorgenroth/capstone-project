@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
-import { FaCheck } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import DishItem from '../Components/DishItem'
-import HeaderOverlay from '../Components/HeaderOverlay'
+import DishItem from '../Components/DishItem/DishItem'
+import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
 
 DishOverview.propTypes = {
   dishes: PropTypes.array,

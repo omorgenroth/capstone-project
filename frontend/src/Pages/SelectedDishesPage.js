@@ -1,9 +1,7 @@
-import { Link } from 'react-router-dom'
-import styled from 'styled-components/macro'
-import DishItem from '../Components/DishItem'
-import ListItem from '../Components/ListItem'
 import PropTypes from 'prop-types'
-import HeaderOverlay from '../Components/HeaderOverlay'
+import styled from 'styled-components/macro'
+import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
+import ListItem from '../Components/ListItem/ListItem'
 
 SelectedDishesPage.propTypes = {
   dishes: PropTypes.array,
