@@ -81,15 +81,6 @@ const LinkOval = styled(Link)`
   right: 20px;
 `
 
-const CheckIcon = styled(FaCheck)`
-  color: var(--c-white);
-  transform: scale(1);
-  z-index: 8;
-  position: fixed;
-  bottom: 73px;
-  right: 33px;
-`
-
 const Counter = styled.div`
   width: 30px;
   height: 30px;

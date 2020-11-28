@@ -26,12 +26,14 @@ const HeaderStyled = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
+  height: 56px;
 `
 
 const LinkStyled = styled(Link)`
   text-decoration: none;
   color: var(--c-gray);
   font-size: 1rem;
+  padding: 5px;
   position: fixed;
   left: 20px;
 `

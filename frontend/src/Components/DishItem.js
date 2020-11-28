@@ -41,7 +41,7 @@ const ItemWrapper = styled.div`
   height: 60px;
   position: relative;
 `
-const Title = styled.h2`
+const Title = styled.p`
   font-size: 1rem;
 `
 

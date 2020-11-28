@@ -1,54 +1,33 @@
 import styled from 'styled-components/macro'
-import { FaMinus } from 'react-icons/fa'
+import { FaMinusCircle } from 'react-icons/fa'
 
-export default function ListItem({ title }) {
+export default function ListItem({ id, title, onDelete }) {
   return (
-    <ItemWrapper>
-      <IconWrapper>
-        <Circle>
-          <DeleteIcon />
-        </Circle>
-      </IconWrapper>
-      <ContentWrapper>
+    <>
+      <ItemWrapper>
+        <DeleteIcon onClick={() => onDelete(id)} />
         <Title>{title}</Title>
-      </ContentWrapper>
-
+      </ItemWrapper>
       <Ruler />
-    </ItemWrapper>
+    </>
   )
 }
 
 const ItemWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 3fr 1fr;
+  display: flex;
 `
-const Title = styled.h2`
+
+const Title = styled.div`
   font-size: 1rem;
 `
 
-const ContentWrapper = styled.div`
-  grid-column: 2/3;
-`
-
-const IconWrapper = styled.div`
-  grid-column: 1/2;
-`
-const DeleteIcon = styled(FaMinus)`
-  color: var(--c-gray);
-  transform: scale(1.5);
-  padding-right: 10px;
-  z-index: 5;
+const DeleteIcon = styled(FaMinusCircle)`
+  color: #ff6e4a;
+  transform: scale(1);
+  margin-right: 5px;
 `
 
 const Ruler = styled.hr`
-  border: 0.3px solid var(--c-green);
-  grid-column: 1/-1;
-  grid-row: 2/3;
-`
-const Circle = styled.div`
-  border-radius: 50%;
-  border: none;
-  background: #ff6e4a;
-  width: 20px;
+  border: 1px solid var(--c-green);
+  width: 85%;
 `

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem'
+import ListItem from '../Components/ListItem'
 import PropTypes from 'prop-types'
 import HeaderOverlay from '../Components/HeaderOverlay'
 
@@ -15,15 +16,9 @@ export default function SelectedDishesPage({ dishes, onDeleteItem }) {
       <HeaderOverlay>Your selection</HeaderOverlay>
       <Grid>
         {dishes &&
-          dishes.map(({ id, name, isSelected }) => {
+          dishes.map(({ id, name }) => {
             return (
-              <DishItem
-                key={id}
-                id={id}
-                title={name}
-                isSelected={isSelected}
-                onClick={deleteItem}
-              />
+              <ListItem key={id} id={id} title={name} onDelete={deleteItem} />
             )
           })}
       </Grid>
