@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
 import DishItem from './DishItem'
+import 'jest-styled-components'
 
 describe('DishItem', () => {
   it('renders correctly', () => {
