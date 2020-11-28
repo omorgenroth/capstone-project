@@ -9,9 +9,12 @@ import getAllDishes from './services/getAllDishes'
 function App() {
   const [dishes, setDishes] = useState([])
   const [selectedDishes, setSelectedDishes] = useState([])
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    getAllDishes().then((data) => setDishes(addIsSelectedValue(data)))
+    getAllDishes()
+      .then((data) => setDishes(addIsSelectedValue(data)))
+      .then(() => setLoading(false))
   }, [])
 
   useEffect(() => {
@@ -25,7 +28,7 @@ function App() {
   return (
     <div className="App">
       <Route exact path="/">
-        <LandingPage />
+        <LandingPage loading={isLoading} />
       </Route>
       <Route path="/home">
         <HomePage />
