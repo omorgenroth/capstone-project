@@ -8,7 +8,11 @@ SelectedDishesPage.propTypes = {
   onDeleteItem: PropTypes.func,
 }
 
-export default function SelectedDishesPage({ selectedDishes, onDeleteItem }) {
+export default function SelectedDishesPage({
+  selectedDishes,
+  onDeleteItem,
+  onCreate,
+}) {
   return (
     <PageWrapper>
       <HeaderOverlay>Your selection</HeaderOverlay>
@@ -20,6 +24,7 @@ export default function SelectedDishesPage({ selectedDishes, onDeleteItem }) {
             )
           })}
       </ContentWrapper>
+      <CreateButton onClick={onCreate} />
     </PageWrapper>
   )
 
@@ -39,4 +44,17 @@ const ContentWrapper = styled.div`
   grid-gap: 10px;
   padding: 10px;
   grid-row: 2/3;
+`
+
+const CreateButton = styled.button`
+  border-radius: 50%;
+  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
+  width: 45px;
+  height: 45px;
+  z-index: 5;
+  background-color: var(--c-orange);
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  border: none;
 `

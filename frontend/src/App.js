@@ -9,8 +9,11 @@ import getAllDishes from './services/getAllDishes'
 function App() {
   const [allDishes, setAllDishes] = useState([])
   const [selectedDishes, setSelectedDishes] = useState([])
+  const [ingredients, setIngredients] = useState([])
   const [isLoading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+
+  console.log(ingredients)
 
   useEffect(() => {
     getAllDishes()
@@ -38,6 +41,7 @@ function App() {
           onDeleteItem={(newSelectedDishes) =>
             setSelectedDishes(newSelectedDishes)
           }
+          onCreate={createIngredientList}
         />
       </Route>
       <Route exact path="/dishes/all">
@@ -52,6 +56,44 @@ function App() {
 
   function addIsSelectedValue(array) {
     return array.map((element) => ({ ...element, isSelected: false }))
+  }
+
+  function createIngredientList() {
+    const selectedIngredients = selectedDishes.map((dish) => {
+      return dish.dishIngredients
+    })
+
+    let flatIngredients = []
+    selectedIngredients.forEach((ingredient) => {
+      let i
+      for (i = 0; i < ingredient.length; i++) {
+        flatIngredients.push({
+          id: ingredient[i].Ingredient.id,
+          name: ingredient[i].Ingredient.name,
+          quantity: ingredient[i].quantity,
+          unit: ingredient[i].Ingredient.unit,
+        })
+      }
+    })
+
+    const reducedIngredientList = flatIngredients.reduce(
+      (list, currentElement) => {
+        if (list.some((a) => a.id === currentElement.id)) {
+          let foundEl = list.find((el) => el.id === currentElement.id)
+          const newQuantity = foundEl.quantity + currentElement.quantity
+          let newList = list.filter((item) => item.id !== currentElement.id)
+          foundEl = { ...foundEl, quantity: newQuantity }
+          newList = [...newList, foundEl]
+          list = newList
+        } else {
+          list.push(currentElement)
+        }
+        return list
+      },
+      []
+    )
+
+    setIngredients(reducedIngredientList)
   }
 }
 
