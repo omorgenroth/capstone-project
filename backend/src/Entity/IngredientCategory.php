@@ -29,10 +29,6 @@ class IngredientCategory
      */
     private $ingredients;
 
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -51,33 +47,5 @@ class IngredientCategory
         return $this;
     }
 
-    /**
-     * @return Collection|Ingredient[]
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients[] = $ingredient;
-            $ingredient->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->removeElement($ingredient)) {
-            // set the owning side to null (unless already changed)
-            if ($ingredient->getCategory() === $this) {
-                $ingredient->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
+  
 }
