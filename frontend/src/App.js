@@ -54,8 +54,8 @@ function App() {
     </div>
   )
 
-  function addIsSelectedValue(data) {
-    return data.map((item) => ({ ...item, isSelected: false }))
+  function addIsSelectedValue(array) {
+    return array.map((element) => ({ ...element, isSelected: false }))
   }
 }
 
