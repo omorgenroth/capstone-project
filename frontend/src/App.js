@@ -79,11 +79,11 @@ function App() {
     const reducedIngredientList = flatIngredients.reduce(
       (list, currentElement) => {
         if (list.some((a) => a.id === currentElement.id)) {
-          let foundEl = list.find((el) => el.id === currentElement.id)
-          const newQuantity = foundEl.quantity + currentElement.quantity
+          let existingItem = list.find((el) => el.id === currentElement.id)
+          const newQuantity = existingItem.quantity + currentElement.quantity
           let newList = list.filter((item) => item.id !== currentElement.id)
-          foundEl = { ...foundEl, quantity: newQuantity }
-          newList = [...newList, foundEl]
+          existingItem = { ...existingItem, quantity: newQuantity }
+          newList = [...newList, existingItem]
           list = newList
         } else {
           list.push(currentElement)
