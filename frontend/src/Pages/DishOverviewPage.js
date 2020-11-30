@@ -16,9 +16,9 @@ export default function DishOverview({ dishes, onToggleItem, error }) {
   }).length
 
   return (
-    <Wrapper>
+    <PageWrapper>
       <HeaderOverlay>Dish Overview</HeaderOverlay>
-      <Grid>
+      <ContentWrapper>
         {error && <div> Couldn`t connect to Server</div>}
         {dishes &&
           dishes.map(({ id, name, isSelected }) => {
@@ -32,17 +32,17 @@ export default function DishOverview({ dishes, onToggleItem, error }) {
               />
             )
           })}
-      </Grid>
+      </ContentWrapper>
       {counter === 0 ? (
         <></>
       ) : (
         <>
-          <LinkOval to="/dishes/selected">
+          <LinkButton to="/dishes/selected">
             <Counter>{counter}</Counter>
-          </LinkOval>
+          </LinkButton>
         </>
       )}
-    </Wrapper>
+    </PageWrapper>
   )
 
   function handleToggle(id) {
@@ -56,19 +56,19 @@ export default function DishOverview({ dishes, onToggleItem, error }) {
   }
 }
 
-const Wrapper = styled.div`
+const PageWrapper = styled.div`
   display: grid;
   grid-template-rows: 60px auto;
 `
 
-const Grid = styled.div`
+const ContentWrapper = styled.div`
   display: grid;
   grid-gap: 15px;
   padding: 20px;
   grid-row: 2/3;
 `
 
-const LinkOval = styled(Link)`
+const LinkButton = styled(Link)`
   border-radius: 50%;
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
   width: 45px;

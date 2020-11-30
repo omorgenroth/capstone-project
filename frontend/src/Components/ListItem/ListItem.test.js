@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react'
 import ListItem from './ListItem'
-import 'jest-styled-components'
 
 describe('ListItem', () => {
   it('renders correctly', () => {

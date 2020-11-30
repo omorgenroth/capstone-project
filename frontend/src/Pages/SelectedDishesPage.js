@@ -8,35 +8,33 @@ SelectedDishesPage.propTypes = {
   onDeleteItem: PropTypes.func,
 }
 
-export default function SelectedDishesPage({ dishes, onDeleteItem }) {
+export default function SelectedDishesPage({ selectedDishes, onDeleteItem }) {
   return (
-    <Wrapper>
+    <PageWrapper>
       <HeaderOverlay>Your selection</HeaderOverlay>
-      <Grid>
-        {dishes &&
-          dishes.map(({ id, name }) => {
+      <ContentWrapper>
+        {selectedDishes &&
+          selectedDishes.map(({ id, name }) => {
             return (
               <ListItem key={id} id={id} title={name} onDelete={deleteItem} />
             )
           })}
-      </Grid>
-    </Wrapper>
+      </ContentWrapper>
+    </PageWrapper>
   )
 
   function deleteItem(id) {
-    const newDishes = dishes.filter((dish) => {
-      return dish.id !== id
-    })
-    onDeleteItem(newDishes)
+    const updatedDishes = selectedDishes.filter((dish) => dish.id !== id)
+    onDeleteItem(updatedDishes)
   }
 }
 
-const Wrapper = styled.div`
+const PageWrapper = styled.div`
   display: grid;
   grid-template-rows: 60px auto;
 `
 
-const Grid = styled.div`
+const ContentWrapper = styled.div`
   display: grid;
   grid-gap: 10px;
   padding: 10px;

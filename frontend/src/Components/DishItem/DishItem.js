@@ -3,9 +3,9 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
 DishItem.propTypes = {
-  id: PropTypes.number,
-  title: PropTypes.string,
-  isSelected: PropTypes.bool,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
   onSelect: PropTypes.func,
 }
 
@@ -13,7 +13,7 @@ export default function DishItem({ id, title, isSelected, onClick }) {
   return (
     <ItemWrapper onClick={() => onClick(id)} selected={isSelected}>
       <ContentWrapper>
-        <Title> {title}</Title>
+        <Title>{title}</Title>
       </ContentWrapper>
       <IconWrapper>
         {isSelected ? (

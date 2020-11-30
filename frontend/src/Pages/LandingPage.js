@@ -1,4 +1,4 @@
-import Logo from '../Assets/Logo.png'
+import logo from '../Assets/logo.png'
 import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 
@@ -11,7 +11,7 @@ export default function LandingPage({ loading }) {
 
   return (
     <Grid>
-      <LogoStyled src={Logo} alt="" />
+      <LogoStyled src={logo} alt="" />
     </Grid>
   )
 }

@@ -1,4 +1,4 @@
-const baseUrl = 'http://capstoner.local/dishes'
+const baseUrl = 'http://capstone.local/dishes'
 
 export default async function getAllDishes() {
   try {

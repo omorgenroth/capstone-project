@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import LogoSmall from '../Assets/Logo_sm.png'
+import logoSmall from '../Assets/logo_sm.png'
 
 export default function Home() {
   return (
     <HomePageStyled>
-      <LogoStyled src={LogoSmall} />
-      <LinkStyled to="/dishes"> Start </LinkStyled>
+      <LogoStyled src={logoSmall} />
+      <LinkStyled to="/dishes/all"> Start </LinkStyled>
     </HomePageStyled>
   )
 }

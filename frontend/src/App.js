@@ -7,7 +7,7 @@ import SelectedDishesPage from './Pages/SelectedDishesPage'
 import getAllDishes from './services/getAllDishes'
 
 function App() {
-  const [dishes, setDishes] = useState([])
+  const [allDishes, setAllDishes] = useState([])
   const [selectedDishes, setSelectedDishes] = useState([])
   const [isLoading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -15,18 +15,14 @@ function App() {
   useEffect(() => {
     getAllDishes()
       .then((data) =>
-        data.error ? setError(true) : setDishes(addIsSelectedValue(data))
+        data.error ? setError(true) : setAllDishes(addIsSelectedValue(data))
       )
       .then(() => setLoading(false))
   }, [])
 
   useEffect(() => {
-    setSelectedDishes(
-      dishes.filter((dish) => {
-        return dish.isSelected
-      })
-    )
-  }, [dishes])
+    setSelectedDishes(allDishes.filter((dish) => dish.isSelected))
+  }, [allDishes])
 
   return (
     <div className="App">
@@ -38,16 +34,16 @@ function App() {
       </Route>
       <Route exact path="/dishes/selected">
         <SelectedDishesPage
-          dishes={selectedDishes}
+          selectedDishes={selectedDishes}
           onDeleteItem={(newSelectedDishes) =>
             setSelectedDishes(newSelectedDishes)
           }
         />
       </Route>
-      <Route exact path="/dishes">
+      <Route exact path="/dishes/all">
         <DishOverviewPage
-          dishes={dishes}
-          onToggleItem={(newDishes) => setDishes(newDishes)}
+          dishes={allDishes}
+          onToggleItem={(newDishes) => setAllDishes(newDishes)}
           error={error}
         />
       </Route>

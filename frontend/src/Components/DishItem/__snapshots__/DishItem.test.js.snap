@@ -47,7 +47,6 @@ exports[`DishItem renders correctly 1`] = `
     <p
       class="c2"
     >
-       
       My Dish
     </p>
   </div>
