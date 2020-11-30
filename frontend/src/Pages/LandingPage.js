@@ -1,30 +1,29 @@
-import { Link } from 'react-router-dom'
+import logo from '../Assets/logo.png'
 import styled from 'styled-components/macro'
+import { useHistory } from 'react-router-dom'
 
-export default function LandingPage() {
+export default function LandingPage({ loading }) {
+  let history = useHistory()
+
+  if (!loading) {
+    history.push('/home')
+  }
+
   return (
-    <LandingPageStyled>
-      <LinkStyled to="/dishes"> Start </LinkStyled>
-    </LandingPageStyled>
+    <Grid>
+      <LogoStyled src={logo} alt="" />
+    </Grid>
   )
 }
 
-const LandingPageStyled = styled.div`
-  max-width: 100%;
+const Grid = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-  display: grid;
-  place-items: center;
-  grid-template-rows: repeat(3, 1fr);
+  background-color: var(--c-green);
 `
 
-const LinkStyled = styled(Link)`
-  background-color: var(--c-white);
-  text-decoration: none;
-  border: none;
-  border-radius: 15px;
-  color: var(--c-gray);
-  padding: 10px;
-  margin: 0 auto;
-  cursor: pointer;
-  grid-row: 3/4;
+const LogoStyled = styled.img`
+  width: 50%;
 `

@@ -3,22 +3,23 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
 DishItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  isChecked: PropTypes.bool,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  onSelect: PropTypes.func,
 }
 
-export default function DishItem({ name, isChecked }) {
+export default function DishItem({ id, title, isSelected, onClick }) {
   return (
-    <ItemWrapper>
+    <ItemWrapper onClick={() => onClick(id)} selected={isSelected}>
       <ContentWrapper>
-        <Title> {name}</Title>
-        <p> Ingredient1, Ingredient2, Ingredient3 </p>
+        <Title>{title}</Title>
       </ContentWrapper>
       <IconWrapper>
-        {isChecked ? (
-          <CheckedIcon data-testid="checked" checked={isChecked} />
+        {isSelected ? (
+          <CheckedIcon data-testid="checked" />
         ) : (
-          <UncheckedIcon data-testid="unchecked" checked={isChecked} />
+          <UncheckedIcon data-testid="unchecked" />
         )}
       </IconWrapper>
     </ItemWrapper>
@@ -26,19 +27,22 @@ export default function DishItem({ name, isChecked }) {
 }
 
 const ItemWrapper = styled.div`
-  background-color: ${(props) => (props.checked ? 'blue' : 'var(--c-white)')};
-  box-shadow: 0, 3px, 6px, rgba(0, 0, 0, 0.5);
+  background-color: ${(props) =>
+    props.selected ? 'var(--c-green)' : 'var(--c-white)'};
+  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.03);
+  color: ${(props) => (props.selected ? 'var(--c-gray)' : 'var(--c-gray)')};
   border-radius: 15px;
+  border: 2px solid var(--c-green);
   font-size: 0.5rem;
   padding: 4px 4px 4px 10px;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  width: 85%;
+  width: 100%;
   height: 60px;
   position: relative;
 `
-const Title = styled.h2`
-  font-size: 1.5em;
+const Title = styled.p`
+  font-size: 1rem;
 `
 
 const ContentWrapper = styled.div`
@@ -51,14 +55,14 @@ const IconWrapper = styled.div`
 
 const CheckedIcon = styled(FaCheckCircle)`
   color: var(--c-gray);
-  transform: scale(2);
+  transform: scale(2.5);
   position: absolute;
   top: 25px;
   right: 30px;
 `
 const UncheckedIcon = styled(FaRegCircle)`
   color: var(--c-gray);
-  transform: scale(2);
+  transform: scale(2.5);
   position: absolute;
   top: 25px;
   right: 30px;

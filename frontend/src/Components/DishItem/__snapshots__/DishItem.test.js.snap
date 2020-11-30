@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DishItem renders correctly 1`] = `
+.c0 {
+  background-color: var(--c-white);
+  box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.03);
+  color: var(--c-gray);
+  border-radius: 15px;
+  border: 2px solid var(--c-green);
+  font-size: 0.5rem;
+  padding: 4px 4px 4px 10px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  width: 100%;
+  height: 60px;
+  position: relative;
+}
+
+.c2 {
+  font-size: 1rem;
+}
+
+.c1 {
+  grid-column: 1/2;
+}
+
+.c3 {
+  grid-column: 2/3;
+}
+
+.c4 {
+  color: var(--c-gray);
+  -webkit-transform: scale(2.5);
+  -ms-transform: scale(2.5);
+  transform: scale(2.5);
+  position: absolute;
+  top: 25px;
+  right: 30px;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    <p
+      class="c2"
+    >
+      My Dish
+    </p>
+  </div>
+  <div
+    class="c3"
+  >
+    <svg
+      class="c4"
+      data-testid="unchecked"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 512 512"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
+      />
+    </svg>
+  </div>
+</div>
+`;
