@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 import DishOverviewPage from './Pages/DishOverviewPage'
 import HomePage from './Pages/HomePage'
+import IngredientListPage from './Pages/IngredientListPage'
 import LandingPage from './Pages/LandingPage'
 import SelectedDishesPage from './Pages/SelectedDishesPage'
 import getAllDishes from './services/getAllDishes'
@@ -13,7 +14,7 @@ function App() {
   const [isLoading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  console.log(ingredients)
+  const history = useHistory()
 
   useEffect(() => {
     getAllDishes()
@@ -51,6 +52,9 @@ function App() {
           error={error}
         />
       </Route>
+      <Route exact path="/ingredients">
+        <IngredientListPage ingredients={ingredients} />
+      </Route>
     </div>
   )
 
@@ -72,6 +76,8 @@ function App() {
           name: ingredient[i].Ingredient.name,
           quantity: ingredient[i].quantity,
           unit: ingredient[i].Ingredient.unit,
+          categoryId: ingredient[i].Ingredient.category.id,
+          category: ingredient[i].Ingredient.category.name,
         })
       }
     })
@@ -94,6 +100,7 @@ function App() {
     )
 
     setIngredients(reducedIngredientList)
+    history.push('/ingredients')
   }
 }
 
