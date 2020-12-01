@@ -1,16 +1,13 @@
-import Accordion from '../Components/Accordion/Accordion'
+import styled from 'styled-components/macro'
 
 export default function IngredientListPage({ ingredients }) {
-  const results = ingredients.map((item) => {
+  const categoriesWithDuplicates = ingredients.map((item) => {
     return { categoryId: item.categoryId, categoryName: item.category }
   })
 
-  const categories = results.reduce((acc, currentElement) => {
+  const categories = categoriesWithDuplicates.reduce((acc, currentElement) => {
     if (!acc.some((a) => a.categoryId === currentElement.categoryId)) {
-      console.log('NotFound: ', currentElement)
       acc.push(currentElement)
-    } else {
-      console.log('Found: ', currentElement)
     }
     return acc
   }, [])
@@ -20,13 +17,33 @@ export default function IngredientListPage({ ingredients }) {
       {categories &&
         categories.map((category) => {
           return (
-            <Accordion
-              key={category.categoryId}
-              title={category.categoryName}
-              content="Hier drin sind dann alle Items"
-            />
+            <CategoryContainer key={category.categoryId}>
+              {category.categoryName}
+              <hr />
+              {ingredients.map((ingredient) => {
+                if (category.categoryId === ingredient.categoryId) {
+                  return (
+                    <IngredientItem key={ingredient.id}>
+                      {ingredient.name}
+                      {`  ( ${ingredient.quantity}${ingredient.unit} )`}
+                    </IngredientItem>
+                  )
+                } else {
+                  return <></>
+                }
+              })}
+            </CategoryContainer>
           )
         })}
     </>
   )
 }
+
+const CategoryContainer = styled.div`
+  font-size: 1rem;
+  margin: 15px 0 5px 5px;
+`
+
+const IngredientItem = styled.div`
+  font-size: 0.7rem;
+`
