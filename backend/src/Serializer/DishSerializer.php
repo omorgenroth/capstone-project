@@ -23,6 +23,7 @@ class DishSerializer {
                 'id' => $ingredient->getId(),
                 'name' =>$ingredient->getName(),
                 'quantity' =>$dishIngredient->getQuantity(),
+                'unit' =>$ingredient->getUnit(),
                 'categoryId'=>$category->getId(),
                 'category'=>$category->getName()
 
