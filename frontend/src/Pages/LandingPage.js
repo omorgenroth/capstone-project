@@ -5,9 +5,11 @@ import { useHistory } from 'react-router-dom'
 export default function LandingPage({ loading }) {
   let history = useHistory()
 
-  if (!loading) {
-    history.push('/home')
-  }
+  setTimeout(() => {
+    if (!loading) {
+      history.push('/home')
+    }
+  }, 3000)
 
   return (
     <Grid>

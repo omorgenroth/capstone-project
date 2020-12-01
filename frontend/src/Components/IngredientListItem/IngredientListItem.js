@@ -13,7 +13,9 @@ export default function IngredientListItem({ props, onClick }) {
       </IconWrapper>
       <ContentWrapper>
         {props.name}
-        {`  ( ${props.quantity} ${props.unit} )`}
+        {props.quantity !== 0
+          ? '  ( ' + props.quantity + props.unit + ' )'
+          : ''}
       </ContentWrapper>
     </ItemWrapper>
   )
