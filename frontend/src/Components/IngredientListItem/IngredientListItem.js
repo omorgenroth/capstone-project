@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro'
 import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
 
-export default function IngredientListItem({ props, onClick, isChecked }) {
+export default function IngredientListItem({ props, onClick }) {
   return (
-    <ItemWrapper onClick={() => onClick(props.id)} checked={isChecked}>
+    <ItemWrapper onClick={() => onClick(props.id)} checked={props.isSelected}>
       <IconWrapper>
-        {isChecked ? (
+        {props.isSelected ? (
           <CheckedIcon data-testid="checked" />
         ) : (
           <UncheckedIcon data-testid="unchecked" />
@@ -13,7 +13,7 @@ export default function IngredientListItem({ props, onClick, isChecked }) {
       </IconWrapper>
       <ContentWrapper>
         {props.name}
-        {`  ( ${props.quantity}${props.unit} )`}
+        {`  ( ${props.quantity} ${props.unit} )`}
       </ContentWrapper>
     </ItemWrapper>
   )
@@ -23,6 +23,8 @@ const ItemWrapper = styled.div`
   font-size: 1rem;
   display: grid;
   grid-template-columns: 25px auto;
+  color: ${(props) => (props.checked ? 'lightgray' : 'var(--c-gray)')};
+  text-decoration: ${(props) => (props.checked ? 'line-through' : 'none')};
 `
 
 const ContentWrapper = styled.div`

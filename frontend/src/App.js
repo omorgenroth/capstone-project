@@ -54,7 +54,12 @@ function App() {
           />
         </Route>
         <Route path="/ingredients">
-          <IngredientListPage ingredients={ingredients} />
+          <IngredientListPage
+            ingredients={ingredients}
+            onCheckItem={(updatedIngredients) =>
+              setIngredients(updatedIngredients)
+            }
+          />
         </Route>
       </Switch>
     </div>
@@ -90,7 +95,7 @@ function App() {
       []
     )
 
-    setIngredients(reducedIngredientList)
+    setIngredients(addIsSelectedValue(reducedIngredientList))
     history.push('/ingredients')
   }
 }
