@@ -12,8 +12,8 @@ export default function ListItem({ id, title, onDelete }) {
   return (
     <>
       <ItemWrapper>
-        <DeleteIcon onClick={() => onDelete(id)} />
         <Title>{title}</Title>
+        <DeleteIcon onClick={() => onDelete(id)} />
       </ItemWrapper>
       <Ruler />
     </>
@@ -21,20 +21,22 @@ export default function ListItem({ id, title, onDelete }) {
 }
 
 const ItemWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
 `
 
 const Title = styled.div`
   font-size: 1rem;
+  grid-column: 1/2;
 `
 
 const DeleteIcon = styled(FaMinusCircle)`
   color: var(--c-orange);
   transform: scale(1);
-  margin-right: 5px;
+  grid-column: 2/3;
 `
 
 const Ruler = styled.hr`
-  border: 1px solid var(--c-green);
-  width: 85%;
+  border: 0.2px solid var(--c-green);
+  width: 100%;
 `
