@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
-import ListItem from '../Components/ListItem/ListItem'
+import DishListItem from '../Components/DishListItem/DishListItem'
 
 SelectedDishesPage.propTypes = {
   dishes: PropTypes.array,
@@ -20,7 +20,12 @@ export default function SelectedDishesPage({
         {selectedDishes &&
           selectedDishes.map(({ id, name }) => {
             return (
-              <ListItem key={id} id={id} title={name} onDelete={deleteItem} />
+              <DishListItem
+                key={id}
+                id={id}
+                title={name}
+                onDelete={deleteItem}
+              />
             )
           })}
       </ContentWrapper>

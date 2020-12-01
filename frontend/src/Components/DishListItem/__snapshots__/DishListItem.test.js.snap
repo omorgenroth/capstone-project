@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListItem renders correctly 1`] = `
+exports[`DishListItem renders correctly 1`] = `
 .c0 {
   display: grid;
   grid-template-columns: 4fr 1fr;

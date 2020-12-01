@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
-import DishOverviewPage from './Pages/DishOverviewPage'
+import DishesAllPage from './Pages/DishesAllPage'
 import HomePage from './Pages/HomePage'
 import IngredientListPage from './Pages/IngredientListPage'
 import LandingPage from './Pages/LandingPage'
-import SelectedDishesPage from './Pages/SelectedDishesPage'
+import DishesSelectedPage from './Pages/DishesSelectedPage'
 import getAllDishes from './services/getAllDishes'
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
           <HomePage />
         </Route>
         <Route path="/dishes/selected">
-          <SelectedDishesPage
+          <DishesSelectedPage
             selectedDishes={selectedDishes}
             onDeleteItem={(newSelectedDishes) =>
               setSelectedDishes(newSelectedDishes)
@@ -47,7 +47,7 @@ function App() {
           />
         </Route>
         <Route path="/dishes/all">
-          <DishOverviewPage
+          <DishesAllPage
             dishes={allDishes}
             onToggleItem={(newDishes) => setAllDishes(newDishes)}
             error={error}
