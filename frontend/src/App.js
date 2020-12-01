@@ -63,22 +63,11 @@ function App() {
   }
 
   function createIngredientList() {
-    const selectedIngredients = selectedDishes.map((dish) => {
-      return dish.dishIngredients
-    })
-
     let flatIngredients = []
-    selectedIngredients.forEach((ingredient) => {
+    selectedDishes.forEach((dish) => {
       let i
-      for (i = 0; i < ingredient.length; i++) {
-        flatIngredients.push({
-          id: ingredient[i].Ingredient.id,
-          name: ingredient[i].Ingredient.name,
-          quantity: ingredient[i].quantity,
-          unit: ingredient[i].Ingredient.unit,
-          categoryId: ingredient[i].Ingredient.category.id,
-          category: ingredient[i].Ingredient.category.name,
-        })
+      for (i = 0; i < dish.ingredients.length; i++) {
+        flatIngredients.push(dish.ingredients[i])
       }
     })
 
