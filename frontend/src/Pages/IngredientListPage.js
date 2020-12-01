@@ -3,8 +3,6 @@ import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
 import IngredientListItem from '../Components/IngredientListItem/IngredientListItem'
 
 export default function IngredientListPage({ ingredients, onCheckItem }) {
-  console.log(ingredients)
-
   const categoriesWithDuplicates = ingredients.map((item) => {
     return { categoryId: item.categoryId, categoryName: item.category }
   })
