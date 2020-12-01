@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro'
+import IngredientListItem from '../Components/IngredientListItem/IngredientListItem'
 
 export default function IngredientListPage({ ingredients }) {
   const categoriesWithDuplicates = ingredients.map((item) => {
@@ -23,10 +24,11 @@ export default function IngredientListPage({ ingredients }) {
               {ingredients.map((ingredient) => {
                 if (category.categoryId === ingredient.categoryId) {
                   return (
-                    <IngredientItem key={ingredient.id}>
-                      {ingredient.name}
-                      {`  ( ${ingredient.quantity}${ingredient.unit} )`}
-                    </IngredientItem>
+                    <IngredientListItem
+                      key={ingredient.id}
+                      props={ingredient}
+                      isChecked={false}
+                    />
                   )
                 } else {
                   return <></>
