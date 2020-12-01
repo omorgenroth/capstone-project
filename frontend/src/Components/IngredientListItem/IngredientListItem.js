@@ -1,5 +1,11 @@
 import styled from 'styled-components/macro'
 import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
+import PropTypes from 'prop-types'
+
+IngredientListItem.propTypes = {
+  props: PropTypes.object,
+  onClick: PropTypes.func,
+}
 
 export default function IngredientListItem({ props, onClick }) {
   return (
