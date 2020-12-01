@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Route, useHistory } from 'react-router-dom'
+import { Route, Switch, useHistory } from 'react-router-dom'
 import DishOverviewPage from './Pages/DishOverviewPage'
 import HomePage from './Pages/HomePage'
 import IngredientListPage from './Pages/IngredientListPage'
@@ -30,31 +30,33 @@ function App() {
 
   return (
     <div className="App">
-      <Route exact path="/">
-        <LandingPage loading={isLoading} />
-      </Route>
-      <Route path="/home">
-        <HomePage />
-      </Route>
-      <Route exact path="/dishes/selected">
-        <SelectedDishesPage
-          selectedDishes={selectedDishes}
-          onDeleteItem={(newSelectedDishes) =>
-            setSelectedDishes(newSelectedDishes)
-          }
-          onCreate={createIngredientList}
-        />
-      </Route>
-      <Route exact path="/dishes/all">
-        <DishOverviewPage
-          dishes={allDishes}
-          onToggleItem={(newDishes) => setAllDishes(newDishes)}
-          error={error}
-        />
-      </Route>
-      <Route exact path="/ingredients">
-        <IngredientListPage ingredients={ingredients} />
-      </Route>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage loading={isLoading} />
+        </Route>
+        <Route path="/home">
+          <HomePage />
+        </Route>
+        <Route path="/dishes/selected">
+          <SelectedDishesPage
+            selectedDishes={selectedDishes}
+            onDeleteItem={(newSelectedDishes) =>
+              setSelectedDishes(newSelectedDishes)
+            }
+            onCreate={createIngredientList}
+          />
+        </Route>
+        <Route path="/dishes/all">
+          <DishOverviewPage
+            dishes={allDishes}
+            onToggleItem={(newDishes) => setAllDishes(newDishes)}
+            error={error}
+          />
+        </Route>
+        <Route path="/ingredients">
+          <IngredientListPage ingredients={ingredients} />
+        </Route>
+      </Switch>
     </div>
   )
 
