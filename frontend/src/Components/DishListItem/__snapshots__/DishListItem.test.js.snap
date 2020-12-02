@@ -1,30 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListItem renders correctly 1`] = `
+exports[`DishListItem renders correctly 1`] = `
 .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c2 {
-  font-size: 1rem;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
 }
 
 .c1 {
+  font-size: 1rem;
+  grid-column: 1/2;
+}
+
+.c2 {
   color: var(--c-orange);
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
-  margin-right: 5px;
+  grid-column: 2/3;
 }
 
 <div
   class="c0"
 >
-  <svg
+  <div
     class="c1"
+  >
+    My Dish
+  </div>
+  <svg
+    class="c2"
     fill="currentColor"
     height="1em"
     stroke="currentColor"
@@ -37,10 +41,5 @@ exports[`ListItem renders correctly 1`] = `
       d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zM124 296c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h264c6.6 0 12 5.4 12 12v56c0 6.6-5.4 12-12 12H124z"
     />
   </svg>
-  <div
-    class="c2"
-  >
-    My Dish
-  </div>
 </div>
 `;

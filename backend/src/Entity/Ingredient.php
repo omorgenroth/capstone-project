@@ -27,6 +27,11 @@ class Ingredient
      */
     private $unit;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=IngredientCategory::class, inversedBy="ingredients")
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Ingredient
     public function setUnit(string $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getCategory(): ?IngredientCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?IngredientCategory $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
