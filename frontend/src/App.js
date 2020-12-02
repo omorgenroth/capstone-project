@@ -40,9 +40,7 @@ function App() {
         <Route path="/dishes/selected">
           <DishesSelectedPage
             selectedDishes={selectedDishes}
-            onDeleteItem={(newSelectedDishes) =>
-              setSelectedDishes(newSelectedDishes)
-            }
+            onDeleteItem={(updatedDishes) => setSelectedDishes(updatedDishes)}
             onCreate={createIngredientList}
           />
         </Route>
