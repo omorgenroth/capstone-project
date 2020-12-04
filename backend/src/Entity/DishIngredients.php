@@ -18,13 +18,13 @@ class DishIngredients
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Dish::class, inversedBy="dishIngredients")
+     * @ORM\ManyToOne(targetEntity=Dish::class, inversedBy="dishIngredients" ,fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $dish;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ingredient::class)
+     * @ORM\ManyToOne(targetEntity=Ingredient::class, fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Ingredient;

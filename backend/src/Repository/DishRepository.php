@@ -19,5 +19,15 @@ class DishRepository extends ServiceEntityRepository
         parent::__construct($registry, Dish::class);
     }
 
+
+    public function findAll() {
+
+        return 
+        $this->createQueryBuilder('d')
+        ->select('d, i')
+        ->leftJoin('d.dishIngredients', 'i')
+        ->getQuery()
+        ->getResult();
+    }
     
 }
