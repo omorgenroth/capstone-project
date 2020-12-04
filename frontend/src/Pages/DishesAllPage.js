@@ -19,7 +19,6 @@ export default function DishOverview({ dishes, onToggleItem, error }) {
     <PageWrapper>
       <HeaderOverlay>Dish Overview</HeaderOverlay>
       <ContentWrapper>
-        {error && <div> Couldn`t connect to Server</div>}
         {dishes &&
           dishes.map(({ id, name, isSelected }) => {
             return (

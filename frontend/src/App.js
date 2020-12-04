@@ -32,7 +32,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LandingPage loading={isLoading} />
+          <LandingPage loading={isLoading} error={error} />
         </Route>
         <Route path="/home">
           <HomePage />
@@ -48,7 +48,6 @@ function App() {
           <DishesAllPage
             dishes={allDishes}
             onToggleItem={(newDishes) => setAllDishes(newDishes)}
-            error={error}
           />
         </Route>
         <Route path="/ingredients">

@@ -2,24 +2,26 @@ import logo from '../Assets/logo.png'
 import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 
-export default function LandingPage({ loading }) {
+export default function LandingPage({ loading, error }) {
   let history = useHistory()
 
   setTimeout(() => {
-    if (!loading) {
+    if (!loading && !error) {
       history.push('/home')
     }
   }, 3000)
 
   return (
-    <Grid>
+    <Flex>
       <LogoStyled src={logo} alt="" />
-    </Grid>
+      {error && <div> Couldn`t connect to Server</div>}
+    </Flex>
   )
 }
 
-const Grid = styled.div`
+const Flex = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -28,4 +30,5 @@ const Grid = styled.div`
 
 const LogoStyled = styled.img`
   width: 50%;
+  margin: 20px;
 `
