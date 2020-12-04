@@ -42,10 +42,9 @@ class ShoppingList
     private $items = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="shoppingLists" ,fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="shoppingLists")
      */
 
-     //TODO Eager benötigt - Performance vergleichen!!
     private $user;
 
     public function getId(): ?int
