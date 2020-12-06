@@ -19,14 +19,29 @@ class ShoppingListRepository extends ServiceEntityRepository
         parent::__construct($registry, ShoppingList::class);
     }
 
-    public function save(Shoppinglist $list): Shoppinglist  {
+    public function save(ShoppingList $list): ShoppingList  {
         $this->_em->persist($list);
         $this->_em->flush();
         return $list;
     } 
 
-    public function delete(Shoppinglist $list): void {
+    public function delete(ShoppingList $list): void {
         $this->_em->remove($list);
         $this->_em->flush();
     }
+     
+    public function update (ShoppingList $list, $data) :ShoppingList {
+
+        var_dump($list);
+        var_dump($data);
+        die;
+
+        empty($data['name']) ? true : $list->setName($data['name']);
+        empty($data['items']) ? true : $list->setItems($data['items']);
+        $this->_em->persist($list);
+        $this->_em->flush();
+        return $list;
+
+    }
+
 }

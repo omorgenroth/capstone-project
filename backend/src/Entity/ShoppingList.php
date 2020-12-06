@@ -20,10 +20,7 @@ class ShoppingList
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank
-     * @Assert\Type(
-     *     type="string",
-     *     message="The value {{ value }} is not a valid {{ type }}." )
+     * 
      */
     private $name;
 

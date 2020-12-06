@@ -53,7 +53,7 @@ class User
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=ShoppingList::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=ShoppingList::class, mappedBy="user" ,cascade={"remove"})
      */
     private $shoppingLists;
 

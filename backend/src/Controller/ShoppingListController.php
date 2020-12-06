@@ -32,7 +32,7 @@ class ShoppingListController extends AbstractController
     /**
      * @Route("/lists/{id}", name="Lists_get_byId", methods={"GET"})
      */
-    public function getById($id,ShoppingListSerializer $serializer, ShoppingListRepository $repository): JsonResponse {
+    public function getById(int $id,ShoppingListSerializer $serializer, ShoppingListRepository $repository): JsonResponse {
 
         $list = $repository->findOneBy(['id' => $id]);
 
@@ -80,7 +80,39 @@ class ShoppingListController extends AbstractController
             );
     }
 
-    /**
+       /**
+     * @Route("/lists/{id}", name="Lists_update", methods={"PUT"})
+     */
+    public function update( 
+        int $id,
+        Request $request, 
+        ShoppingListRepository $repository,  
+        ShoppingListSerializer $serializer, 
+        ValidatorInterface $validator
+        ): JsonResponse {      
+
+       
+        $list = $repository->findOneBy(['id' => $id]);
+
+        if (is_null ($list)) {
+            return new JsonResponse(["error" => "List not found"], JsonResponse::HTTP_NOT_FOUND);
+        }
+       
+        $data = json_decode($request->getContent(), true);
+        // $errors = $validator->validate($data);
+            
+        // if ($errors->count() !== 0) {
+        //         return new JsonResponse(["error" => "Validation failed"], JsonResponse::HTTP_BAD_REQUEST);
+        //     }
+            
+         $repository->update($list, $data);
+
+        return new JsonResponse(['Success' => "List updated"]);
+    
+    }
+
+
+         /**
      * @Route("/lists/{id}", name="Lists_delete", methods={"DELETE"})
      */
     public function remove(
