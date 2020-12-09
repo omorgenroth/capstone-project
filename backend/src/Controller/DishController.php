@@ -15,7 +15,7 @@ use App\Entity\Dish;
 class DishController extends AbstractController
 {
     /**
-     * @Route("/dishes", name="dish")
+     * @Route("/dishes", name="Dishes_get_all")
      */
     public function getAll(DishSerializer $serializer, DishRepository $repository): JsonResponse {
         $dishes = $repository->findAll();

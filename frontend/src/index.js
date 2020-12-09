@@ -1,14 +1,16 @@
+import { ChakraProvider } from '@chakra-ui/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import GlobalStyle from './GlobalStyle'
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
+import customTheme from './themes/customTheme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle />
     <Router>
-      <App />
+      <ChakraProvider resetCSS={true} theme={customTheme}>
+        <App />
+      </ChakraProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

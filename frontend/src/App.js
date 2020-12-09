@@ -1,73 +1,73 @@
-import { useEffect, useState } from 'react'
+import { useToast } from '@chakra-ui/react'
+import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
-import DishesAllPage from './Pages/DishesAllPage'
-import HomePage from './Pages/HomePage'
-import IngredientListPage from './Pages/IngredientListPage'
-import LandingPage from './Pages/LandingPage'
-import DishesSelectedPage from './Pages/DishesSelectedPage'
-import getAllDishes from './services/getAllDishes'
+import useDishes from './hooks/useDishes'
+import useLists from './hooks/useLists'
+import { addIsSelectedValue, sortByName } from './lib/lib'
+import DishesAllPage from './pages/DishesAllPage'
+import HomePage from './pages/HomePage'
+import LandingPage from './pages/LandingPage'
+import ShoppingListPage from './pages/ShoppingListPage'
+import { saveList } from './services/fetchLists'
 
 function App() {
-  const [allDishes, setAllDishes] = useState([])
-  const [selectedDishes, setSelectedDishes] = useState([])
-  const [ingredients, setIngredients] = useState([])
-  const [isLoading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+  const user = {
+    id: 5,
+    firstname: '1',
+    lastname: 'Skywalker',
+    email: 'leia@skywalker.com',
+  }
+
+  const {
+    allDishes,
+    setAllDishes,
+    selectedDishes,
+    resetSelectedDishes,
+  } = useDishes()
+
+  const {
+    currentList,
+    userLists,
+    setUserLists,
+    updateCurrentList,
+    isLoading,
+    isError,
+  } = useLists({
+    userId: user.id,
+  })
+
+  const notifier = useToast()
 
   const history = useHistory()
-
-  useEffect(() => {
-    getAllDishes()
-      .then((data) =>
-        data.error ? setError(true) : setAllDishes(addIsSelectedValue(data))
-      )
-      .then(() => setLoading(false))
-  }, [])
-
-  useEffect(() => {
-    setSelectedDishes(allDishes.filter((dish) => dish.isSelected))
-  }, [allDishes])
 
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LandingPage loading={isLoading} />
+          <LandingPage loading={isLoading} error={isError} />
         </Route>
         <Route path="/home">
-          <HomePage />
+          <HomePage currentList={currentList} />
         </Route>
-        <Route path="/dishes/selected">
-          <DishesSelectedPage
-            selectedDishes={selectedDishes}
-            onDeleteItem={(updatedDishes) => setSelectedDishes(updatedDishes)}
-            onCreate={createIngredientList}
-          />
-        </Route>
-        <Route path="/dishes/all">
+        <Route path="/dishes">
           <DishesAllPage
             dishes={allDishes}
             onToggleItem={(newDishes) => setAllDishes(newDishes)}
-            error={error}
+            onCreate={(listName) => createIngredientList(listName)}
+            onClose={() => resetSelectedDishes()}
           />
         </Route>
-        <Route path="/ingredients">
-          <IngredientListPage
-            ingredients={ingredients}
-            onCheckItem={(updatedIngredients) =>
-              setIngredients(updatedIngredients)
-            }
+        <Route path="/lists/current">
+          <ShoppingListPage
+            currentList={currentList}
+            onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
           />
         </Route>
       </Switch>
     </div>
   )
 
-  function addIsSelectedValue(array) {
-    return array.map((element) => ({ ...element, isSelected: false }))
-  }
-
-  function createIngredientList() {
+  function createIngredientList(listName) {
     let flatIngredients = []
     selectedDishes.forEach((dish) => {
       let i
@@ -88,13 +88,36 @@ function App() {
         } else {
           list.push(currentElement)
         }
+
         return list
       },
       []
     )
+    const sortedIngredientList = sortByName(reducedIngredientList)
 
-    setIngredients(addIsSelectedValue(reducedIngredientList))
-    history.push('/ingredients')
+    const ingredientList = addIsSelectedValue(sortedIngredientList)
+    const listObject = {
+      name: listName ? listName : '',
+      userId: user.id,
+      items: ingredientList,
+    }
+    resetSelectedDishes()
+    createList(listObject)
+  }
+
+  async function createList(list) {
+    const savedList = await saveList(list)
+    setUserLists([...userLists, savedList[savedList.length - 1]])
+
+    notifier({
+      description:
+        'Created a List with the ID: ' + savedList[savedList.length - 1].id,
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    })
+
+    history.push('/lists/current')
   }
 }
 

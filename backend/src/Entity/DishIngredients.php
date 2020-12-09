@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DishIngredientsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DishIngredientsRepository::class)
@@ -18,13 +19,13 @@ class DishIngredients
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Dish::class, inversedBy="dishIngredients")
+     * @ORM\ManyToOne(targetEntity=Dish::class, inversedBy="dishIngredients" ,fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $dish;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ingredient::class)
+     * @ORM\ManyToOne(targetEntity=Ingredient::class, fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Ingredient;

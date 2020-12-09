@@ -1,8 +1,10 @@
+import { Grid, Skeleton } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components/macro'
-import DishItem from '../Components/DishItem/DishItem'
-import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import DishItem from '../components/DishItem/DishItem'
+import HeaderOverlay from '../components/HeaderOverlay/HeaderOverlay'
+import { sortByName } from '../lib/lib'
 
 DishOverview.propTypes = {
   dishes: PropTypes.array,
@@ -10,86 +12,68 @@ DishOverview.propTypes = {
   error: PropTypes.bool,
 }
 
-export default function DishOverview({ dishes, onToggleItem, error }) {
+export default function DishOverview({
+  dishes,
+  onToggleItem,
+  onCreate,
+  onClose,
+}) {
+  const [listName, setListName] = useState('')
+
   let counter = dishes.filter((dish) => {
     return dish.isSelected
   }).length
 
+  const sortedDishes = sortByName(dishes)
+  const history = useHistory()
+  const [isLoading, setLoading] = useState(false)
+
   return (
-    <PageWrapper>
-      <HeaderOverlay>Dish Overview</HeaderOverlay>
-      <ContentWrapper>
-        {error && <div> Couldn`t connect to Server</div>}
-        {dishes &&
-          dishes.map(({ id, name, isSelected }) => {
-            return (
-              <DishItem
-                key={id}
-                id={id}
-                title={name}
-                isSelected={isSelected}
-                onClick={handleToggle}
-              />
-            )
-          })}
-      </ContentWrapper>
-      {counter === 0 ? (
-        <></>
-      ) : (
-        <>
-          <LinkButton to="/dishes/selected">
-            <Counter>{counter}</Counter>
-          </LinkButton>
-        </>
-      )}
-    </PageWrapper>
+    <Grid columns="60px auto">
+      <HeaderOverlay
+        onClose={handleClose}
+        onCreate={handleCreate}
+        counter={counter}
+        listName={listName}
+        setName={(name) => setListName(name)}
+        loading={isLoading}
+      />
+      <Skeleton isLoaded={!isLoading} height="100vh">
+        <Grid gap="15px" p="20px" mt="65px" row="2/3">
+          {sortedDishes &&
+            sortedDishes.map(({ id, name, isSelected }) => {
+              return (
+                <DishItem
+                  key={id}
+                  id={id}
+                  title={name}
+                  isSelected={isSelected}
+                  onClick={handleToggle}
+                />
+              )
+            })}
+        </Grid>
+      </Skeleton>
+    </Grid>
   )
 
   function handleToggle(id) {
     const elIndex = dishes.findIndex((el) => el.id === id)
-    let newDishes = [...dishes]
-    newDishes[elIndex] = {
-      ...newDishes[elIndex],
-      isSelected: !newDishes[elIndex].isSelected,
+    let updatedDishes = [...dishes]
+    updatedDishes[elIndex] = {
+      ...updatedDishes[elIndex],
+      isSelected: !updatedDishes[elIndex].isSelected,
     }
-    onToggleItem(newDishes)
+    onToggleItem(updatedDishes)
+  }
+
+  function handleClose() {
+    onClose()
+    history.push('/home')
+  }
+
+  function handleCreate() {
+    setLoading(true)
+    onCreate(listName)
   }
 }
-
-const PageWrapper = styled.div`
-  display: grid;
-  grid-template-rows: 60px auto;
-`
-
-const ContentWrapper = styled.div`
-  display: grid;
-  grid-gap: 15px;
-  padding: 20px;
-  grid-row: 2/3;
-`
-
-const LinkButton = styled(Link)`
-  border-radius: 50%;
-  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
-  width: 45px;
-  height: 45px;
-  z-index: 5;
-  background-color: var(--c-orange);
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-`
-
-const Counter = styled.div`
-  width: 30px;
-  height: 30px;
-  color: var(--c-white);
-  border-radius: 50%;
-  z-index: 7;
-  font-size: 1rem;
-  display: grid;
-  place-items: center;
-  position: fixed;
-  bottom: 67px;
-  right: 27px;
-`

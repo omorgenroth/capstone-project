@@ -1,6 +1,6 @@
-import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
-import styled from 'styled-components/macro'
+import { Flex, Grid, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
+import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
 
 DishItem.propTypes = {
   id: PropTypes.number.isRequired,
@@ -11,59 +11,26 @@ DishItem.propTypes = {
 
 export default function DishItem({ id, title, isSelected, onClick }) {
   return (
-    <ItemWrapper onClick={() => onClick(id)} selected={isSelected}>
-      <ContentWrapper>
-        <Title>{title}</Title>
-      </ContentWrapper>
-      <IconWrapper>
+    <Grid
+      onClick={() => onClick(id)}
+      selected={isSelected}
+      templateColumns="5fr 1fr"
+      w="100%"
+      h="60px"
+      bg={isSelected ? 'primaryGreen.500' : 'white'}
+      boxShadow="base"
+      borderRadius="10px"
+      p="4px">
+      <Flex align="center" gridColumn="1/2">
+        <Text>{title}</Text>
+      </Flex>
+      <Flex gridColumn="2/3" align="center">
         {isSelected ? (
-          <CheckedIcon data-testid="checked" />
+          <FaCheckCircle data-testid="checked" />
         ) : (
-          <UncheckedIcon data-testid="unchecked" />
+          <FaRegCircle data-testid="unchecked" />
         )}
-      </IconWrapper>
-    </ItemWrapper>
+      </Flex>
+    </Grid>
   )
 }
-
-const ItemWrapper = styled.div`
-  background-color: ${(props) =>
-    props.selected ? 'var(--c-green)' : 'var(--c-white)'};
-  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.03);
-  color: ${(props) => (props.selected ? 'var(--c-gray)' : 'var(--c-gray)')};
-  border-radius: 15px;
-  border: 2px solid var(--c-green);
-  font-size: 0.5rem;
-  padding: 4px 4px 4px 10px;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  width: 100%;
-  height: 60px;
-  position: relative;
-`
-const Title = styled.p`
-  font-size: 1rem;
-`
-
-const ContentWrapper = styled.div`
-  grid-column: 1/2;
-`
-
-const IconWrapper = styled.div`
-  grid-column: 2/3;
-`
-
-const CheckedIcon = styled(FaCheckCircle)`
-  color: var(--c-gray);
-  transform: scale(2.5);
-  position: absolute;
-  top: 25px;
-  right: 30px;
-`
-const UncheckedIcon = styled(FaRegCircle)`
-  color: var(--c-gray);
-  transform: scale(2.5);
-  position: absolute;
-  top: 25px;
-  right: 30px;
-`
