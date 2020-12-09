@@ -5,15 +5,16 @@ import { getAllDishes } from '../services/fetchDishes'
 export default function useDishes() {
   const [allDishes, setAllDishes] = useState([])
   const [selectedDishes, setSelectedDishes] = useState([])
+  const [isLoading, setLoading] = useState(false)
+  const [isError, setError] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     getAllDishes()
       .then((data) =>
-        data.error
-          ? console.log('error')
-          : setAllDishes(addIsSelectedValue(data))
+        data.error ? setError(true) : setAllDishes(addIsSelectedValue(data))
       )
-      .then(() => console.log('Loading finished'))
+      .then(() => setLoading(false))
   }, [])
 
   useEffect(() => {
@@ -25,6 +26,8 @@ export default function useDishes() {
     setAllDishes,
     selectedDishes,
     resetSelectedDishes,
+    isError,
+    isLoading,
   }
 
   function resetSelectedDishes() {

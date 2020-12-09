@@ -11,16 +11,12 @@ import ShoppingListPage from './pages/ShoppingListPage'
 import { saveList } from './services/fetchLists'
 
 function App() {
-  const defaultUser = [
-    {
-      id: 5,
-      firstname: '1',
-      lastname: 'Skywalker',
-      email: 'leia@skywalker.com',
-    },
-  ]
-
-  const [user, setUser] = useState(defaultUser)
+  const user = {
+    id: 5,
+    firstname: '1',
+    lastname: 'Skywalker',
+    email: 'leia@skywalker.com',
+  }
 
   const {
     allDishes,
@@ -31,30 +27,24 @@ function App() {
 
   const {
     currentList,
-    setCurrentList,
     userLists,
     setUserLists,
     updateCurrentList,
+    isLoading,
+    isError,
   } = useLists({
-    userId: user[0].id,
+    userId: user.id,
   })
 
   const notifier = useToast()
-  const [isLoading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
 
   const history = useHistory()
-
-  useEffect(() => {
-    const currentItem = userLists[userLists.length - 1]
-    setCurrentList(currentItem)
-  }, [userLists])
 
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LandingPage loading={isLoading} error={error} />
+          <LandingPage loading={isLoading} error={isError} />
         </Route>
         <Route path="/home">
           <HomePage currentList={currentList} />
@@ -108,7 +98,7 @@ function App() {
     const ingredientList = addIsSelectedValue(sortedIngredientList)
     const listObject = {
       name: listName ? listName : '',
-      userId: user[0].id,
+      userId: user.id,
       items: ingredientList,
     }
     resetSelectedDishes()
