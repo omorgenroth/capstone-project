@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useToast } from '@chakra-ui/react'
+import { useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
-import DishesAllPage from './Pages/DishesAllPage'
-import HomePage from './Pages/HomePage'
-import IngredientListPage from './Pages/IngredientListPage'
-import LandingPage from './Pages/LandingPage'
+import useDishes from './hooks/useDishes'
+import useLists from './hooks/useLists'
+import { addIsSelectedValue, sortByName } from './lib/lib'
+import DishesAllPage from './pages/DishesAllPage'
+import HomePage from './pages/HomePage'
+import LandingPage from './pages/LandingPage'
+import ShoppingListPage from './pages/ShoppingListPage'
 import { saveList } from './services/fetchLists'
-import { getUserLists } from './services/fetchUsers'
-import { getAllDishes } from './services/fetchDishes'
-import { sortByName } from './lib/lib'
 
 function App() {
   const defaultUser = [
@@ -18,43 +19,31 @@ function App() {
       email: 'leia@skywalker.com',
     },
   ]
-  // TODO States aufräumen
 
-  // Auf OverlaySeite verschieben? selectedDishes vllt. auflösen?
-  const [allDishes, setAllDishes] = useState([])
-  const [selectedDishes, setSelectedDishes] = useState([])
-
-  // löschen - alles über userList lösen
-  const [ingredients, setIngredients] = useState([])
-
-  //Custom Hook?
-  const [isLoading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-
-  //Context API
   const [user, setUser] = useState(defaultUser)
 
-  // currentList vllt. auch auflösen?
-  const [currentList, setCurrentList] = useState({})
-  const [userLists, setUserLists] = useState([])
+  const {
+    allDishes,
+    setAllDishes,
+    selectedDishes,
+    resetSelectedDishes,
+  } = useDishes()
+
+  const {
+    currentList,
+    setCurrentList,
+    userLists,
+    setUserLists,
+    updateCurrentList,
+  } = useLists({
+    userId: user[0].id,
+  })
+
+  const notifier = useToast()
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   const history = useHistory()
-
-  useEffect(() => {
-    getAllDishes()
-      .then((data) =>
-        data.error ? setError(true) : setAllDishes(addIsSelectedValue(data))
-      )
-      .then(() => setLoading(false))
-
-    getUserLists(user[0].id)
-      .then((data) => (data.error ? setError(true) : setUserLists(data)))
-      .then(() => setLoading(false))
-  }, [])
-
-  useEffect(() => {
-    setSelectedDishes(allDishes.filter((dish) => dish.isSelected))
-  }, [allDishes])
 
   useEffect(() => {
     const currentItem = userLists[userLists.length - 1]
@@ -68,7 +57,7 @@ function App() {
           <LandingPage loading={isLoading} error={error} />
         </Route>
         <Route path="/home">
-          <HomePage userLists={userLists} currentList={currentList} />
+          <HomePage currentList={currentList} />
         </Route>
         <Route path="/dishes">
           <DishesAllPage
@@ -79,31 +68,14 @@ function App() {
           />
         </Route>
         <Route path="/lists/current">
-          <IngredientListPage
+          <ShoppingListPage
             currentList={currentList}
-            onCheckItem={(updatedIngredients) => updateList(updatedIngredients)}
+            onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
           />
         </Route>
       </Switch>
     </div>
   )
-
-  function updateList(updatedIngredients) {
-    setCurrentList({ ...currentList, items: updatedIngredients })
-    const listObject = {
-      name: currentList.name,
-      userId: currentList.id,
-      items: updatedIngredients,
-    }
-  }
-
-  function addIsSelectedValue(array) {
-    return array.map((element) => ({ ...element, isSelected: false }))
-  }
-
-  function resetSelectedDishes() {
-    setAllDishes(addIsSelectedValue(allDishes))
-  }
 
   function createIngredientList(listName) {
     let flatIngredients = []
@@ -140,9 +112,22 @@ function App() {
       items: ingredientList,
     }
     resetSelectedDishes()
-    saveList(listObject).then((listItem) =>
-      setUserLists([...userLists, listItem[listItem.length - 1]])
-    )
+    createList(listObject)
+  }
+
+  async function createList(list) {
+    const savedList = await saveList(list)
+    setUserLists([...userLists, savedList[savedList.length - 1]])
+
+    notifier({
+      description:
+        'Created a List with the ID: ' + savedList[savedList.length - 1].id,
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    })
+
+    history.push('/lists/current')
   }
 }
 
