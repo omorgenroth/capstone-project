@@ -1,6 +1,12 @@
-import logo from '../Assets/logo.png'
-import styled from 'styled-components/macro'
+import { Flex, Image } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
+import logo from '../assets/logo.png'
+import PropTypes from 'prop-types'
+
+LandingPage.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+}
 
 export default function LandingPage({ loading, error }) {
   let history = useHistory()
@@ -9,26 +15,17 @@ export default function LandingPage({ loading, error }) {
     if (!loading && !error) {
       history.push('/home')
     }
-  }, 3000)
+  }, 2000)
 
   return (
-    <Flex>
-      <LogoStyled src={logo} alt="" />
+    <Flex
+      bg="primaryGreen.500"
+      directen="column"
+      justify="center"
+      align="center"
+      height="100vh">
+      <Image src={logo} alt="" width="50%" />
       {error && <div> Couldn`t connect to Server</div>}
     </Flex>
   )
 }
-
-const Flex = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: var(--c-green);
-`
-
-const LogoStyled = styled.img`
-  width: 50%;
-  margin: 20px;
-`

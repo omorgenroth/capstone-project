@@ -1,39 +1,68 @@
-import styled from 'styled-components/macro'
+import { Box, chakra, Container, Flex, Input, Spinner } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
 
 HeaderOverlay.propTypes = {
-  children: PropTypes.string,
+  counter: PropTypes.number,
+  onClose: PropTypes.func.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  listName: PropTypes.string.isRequired,
+  setName: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 }
 
-export default function HeaderOverlay({ children }) {
+export default function HeaderOverlay({
+  counter,
+  onClose,
+  onCreate,
+  listName,
+  setName,
+  loading,
+}) {
+  const CloseIcon = chakra(AiOutlineClose)
+  const CheckIcon = chakra(AiOutlineCheck)
+
   return (
-    <HeaderStyled>
-      <LinkStyled to="/home">X</LinkStyled>
-      {children}
-    </HeaderStyled>
+    <Flex
+      align="center"
+      justify="space-between"
+      bg="primaryGreen.500"
+      pos="fixed"
+      top="0"
+      w="100%"
+      h="56px"
+      borderRadius="0 0 20px 20px"
+      boxShadow="md"
+      zIndex="10">
+      <Container onClick={onClose} color="primaryBlue.500">
+        <CloseIcon boxSize="22px" />
+      </Container>
+      <Container>
+        <Input
+          id="name"
+          placeholder="Name"
+          value={listName}
+          onChange={(e) => setName(e.target.value)}
+          textAlign="center"
+          color="primaryBlue.500"
+          w="20ch"
+          h="25px"
+        />
+      </Container>
+      <Container onClick={onCreate} color="primaryBlue.500" ml="20px">
+        {loading ? (
+          <Spinner />
+        ) : counter !== 0 ? (
+          <>
+            <CheckIcon boxSize="22px" />
+            <Box fontSize="xs" pos="fixed" top="27px" right="22px">
+              {counter}
+            </Box>
+          </>
+        ) : (
+          <></>
+        )}
+      </Container>
+    </Flex>
   )
 }
-
-const HeaderStyled = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  z-index: 10;
-  background-color: var(--c-green);
-  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.08);
-  border-radius: 0 0 15px 15px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 56px;
-`
-
-const LinkStyled = styled(Link)`
-  text-decoration: none;
-  color: var(--c-gray);
-  font-size: 1rem;
-  padding: 5px;
-  position: fixed;
-  left: 20px;
-`

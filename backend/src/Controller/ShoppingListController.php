@@ -97,6 +97,7 @@ class ShoppingListController extends AbstractController
         if (is_null ($list)) {
             return new JsonResponse(["error" => "List not found"], JsonResponse::HTTP_NOT_FOUND);
         }
+        
        
         $data = json_decode($request->getContent(), true);
         // $errors = $validator->validate($data);

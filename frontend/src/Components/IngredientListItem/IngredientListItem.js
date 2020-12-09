@@ -1,53 +1,36 @@
-import styled from 'styled-components/macro'
-import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
+import { chakra, Flex, Grid } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
+import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
 
 IngredientListItem.propTypes = {
-  props: PropTypes.object,
-  onClick: PropTypes.func,
+  props: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default function IngredientListItem({ props, onClick }) {
+  const CheckedIcon = chakra(FaCheckCircle)
+  const UncheckedIcon = chakra(FaRegCircle)
   return (
-    <ItemWrapper onClick={() => onClick(props.id)} checked={props.isSelected}>
-      <IconWrapper>
+    <Grid
+      onClick={() => onClick(props.id)}
+      checked={props.isSelected}
+      templateColumns="25px auto"
+      textDecoration={props.isSelected ? 'line-through' : 'none'}
+      color={props.isSelected ? 'lightgray' : 'primaryBlue.500'}
+      fontSize="0.85rem">
+      <Flex align="center">
         {props.isSelected ? (
-          <CheckedIcon data-testid="checked" />
+          <CheckedIcon data-testid="checked" transform="scale(1)" />
         ) : (
-          <UncheckedIcon data-testid="unchecked" />
+          <UncheckedIcon data-testid="unchecked" transform="scale(1)" />
         )}
-      </IconWrapper>
-      <ContentWrapper>
+      </Flex>
+      <Flex align="center">
         {props.name}
         {props.quantity !== 0
-          ? '  ( ' + props.quantity + props.unit + ' )'
+          ? '  ( ' + props.quantity + ' ' + props.unit + ' )'
           : ''}
-      </ContentWrapper>
-    </ItemWrapper>
+      </Flex>
+    </Grid>
   )
 }
-
-const ItemWrapper = styled.div`
-  font-size: 1rem;
-  display: grid;
-  grid-template-columns: 25px auto;
-  color: ${(props) => (props.checked ? 'lightgray' : 'var(--c-gray)')};
-  text-decoration: ${(props) => (props.checked ? 'line-through' : 'none')};
-`
-
-const ContentWrapper = styled.div`
-  grid-column: 2/3;
-`
-
-const IconWrapper = styled.div`
-  grid-column: 1/2;
-`
-
-const CheckedIcon = styled(FaCheckCircle)`
-  color: var(--c-gray);
-  transform: scale(1);
-`
-const UncheckedIcon = styled(FaRegCircle)`
-  color: var(--c-gray);
-  transform: scale(1);
-`

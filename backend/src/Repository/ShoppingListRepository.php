@@ -32,16 +32,13 @@ class ShoppingListRepository extends ServiceEntityRepository
      
     public function update (ShoppingList $list, $data) :ShoppingList {
 
-        var_dump($list);
-        var_dump($data);
-        die;
-
         empty($data['name']) ? true : $list->setName($data['name']);
         empty($data['items']) ? true : $list->setItems($data['items']);
         $this->_em->persist($list);
         $this->_em->flush();
         return $list;
-
     }
+
+    
 
 }
