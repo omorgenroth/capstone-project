@@ -1,31 +1,48 @@
 import styled from 'styled-components/macro'
-import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
+import Header from '../Components/Header'
 import IngredientListItem from '../Components/IngredientListItem/IngredientListItem'
+import NavigationBar from '../Components/NavigationBar'
+import { sortByName } from '../lib/lib'
 
-export default function IngredientListPage({ ingredients, onCheckItem }) {
-  const categoriesWithDuplicates = ingredients.map((item) => {
-    return { categoryId: item.categoryId, categoryName: item.category }
-  })
+export default function IngredientListPage({ currentList, onCheckItem }) {
+  window.scroll(0, 0)
 
-  const categories = categoriesWithDuplicates.reduce((acc, currentElement) => {
-    if (!acc.some((a) => a.categoryId === currentElement.categoryId)) {
-      acc.push(currentElement)
-    }
-    return acc
-  }, [])
+  const ingredients = currentList.items
+  const categoriesWithDuplicates =
+    ingredients &&
+    ingredients.map((item) => {
+      return { id: item.categoryId, name: item.category }
+    })
+
+  const categoriesUnique = categoriesWithDuplicates.reduce(
+    (acc, currentElement) => {
+      if (!acc.some((a) => a.id === currentElement.id)) {
+        acc.push(currentElement)
+      }
+      return acc
+    },
+    []
+  )
+
+  const categories = sortByName(categoriesUnique)
 
   return (
     <PageWrapper>
-      <HeaderOverlay />
+      <Header />
+
       <ContentWrapper>
+        <div>
+          Liste:
+          {currentList.name === '' ? 'Nr.' + currentList.id : currentList.name}
+        </div>
         {categories &&
           categories.map((category) => {
             return (
-              <CategoryContainer key={category.categoryId}>
-                {category.categoryName}
+              <CategoryContainer key={category.id}>
+                {category.name}
                 <Ruler />
                 {ingredients.map((ingredient) => {
-                  if (category.categoryId === ingredient.categoryId) {
+                  if (category.id === ingredient.categoryId) {
                     return (
                       <IngredientListItem
                         key={ingredient.id}
@@ -41,6 +58,7 @@ export default function IngredientListPage({ ingredients, onCheckItem }) {
             )
           })}
       </ContentWrapper>
+      <NavigationBar route="current" />
     </PageWrapper>
   )
 
@@ -51,28 +69,29 @@ export default function IngredientListPage({ ingredients, onCheckItem }) {
       ...newIngredients[elIndex],
       isSelected: !newIngredients[elIndex].isSelected,
     }
+    console.log(newIngredients)
     onCheckItem(newIngredients)
   }
 }
 
 const PageWrapper = styled.div`
   display: grid;
-  grid-template-rows: 60px auto;
+  grid-template-rows: 60px auto 50px;
 `
 const ContentWrapper = styled.div`
-  display: grid;
-  grid-gap: 10px;
   padding: 15px 20px 0 20px;
   grid-row: 2/3;
   min-width: 100%;
+  min-height: 100vh;
 `
 
 const CategoryContainer = styled.div`
-  font-size: 1rem;
-  margin: 0 0 5px 5px;
-  color: var(--c-gray);
+  font-size: 0.9rem;
+  margin: 0 0 12px 5px;
+  color: var(--c-blue);
 `
 const Ruler = styled.hr`
   border: 0.2px solid var(--c-green);
   width: 100%;
+  margin: 2px 0 3px 0;
 `

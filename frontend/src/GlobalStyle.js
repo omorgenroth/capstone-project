@@ -3,10 +3,13 @@ import { createGlobalStyle } from 'styled-components/macro'
 export default createGlobalStyle`
 
 :root {
-    --c-green: rgb(147,226,202);
-    --c-white: rgb(247,247,247);
-    --c-gray: rgb(112,112,112);
-    --c-orange: rgb(255, 110, 74);
+    --c-green: #93e2ca;
+    --c-lightgreen: #EFFBF7;
+    --c-darkgreen: #0B2027;
+    --c-white: #f7f7f7;
+    --c-gray: #707070;
+    --c-orange: #ff6e4a;
+    --c-blue: #1a212c;
 }
 
 html {
@@ -22,6 +25,7 @@ body {
     font-size: 112.5%;
     font-family: 'Comfortaa', cursive;
     color: var(--c-gray);
+    background-color: var(--c-lightgreen);
     
 }
 

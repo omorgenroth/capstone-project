@@ -20,7 +20,7 @@ export default function IngredientListItem({ props, onClick }) {
       <ContentWrapper>
         {props.name}
         {props.quantity !== 0
-          ? '  ( ' + props.quantity + props.unit + ' )'
+          ? '  ( ' + props.quantity + ' ' + props.unit + ' )'
           : ''}
       </ContentWrapper>
     </ItemWrapper>
@@ -28,7 +28,7 @@ export default function IngredientListItem({ props, onClick }) {
 }
 
 const ItemWrapper = styled.div`
-  font-size: 1rem;
+  font-size: 0.85rem;
   display: grid;
   grid-template-columns: 25px auto;
   color: ${(props) => (props.checked ? 'lightgray' : 'var(--c-gray)')};

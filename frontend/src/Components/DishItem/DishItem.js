@@ -30,23 +30,26 @@ const ItemWrapper = styled.div`
   background-color: ${(props) =>
     props.selected ? 'var(--c-green)' : 'var(--c-white)'};
   box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.03);
-  color: ${(props) => (props.selected ? 'var(--c-gray)' : 'var(--c-gray)')};
+  color: ${(props) => (props.selected ? 'var(--c-blue)' : 'var(--c-gray)')};
   border-radius: 15px;
   border: 2px solid var(--c-green);
   font-size: 0.5rem;
   padding: 4px 4px 4px 10px;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 5fr 1fr;
   width: 100%;
   height: 60px;
   position: relative;
 `
 const Title = styled.p`
   font-size: 1rem;
+  margin: 0;
 `
 
 const ContentWrapper = styled.div`
   grid-column: 1/2;
+  display: flex;
+  align-items: center;
 `
 
 const IconWrapper = styled.div`
@@ -54,14 +57,14 @@ const IconWrapper = styled.div`
 `
 
 const CheckedIcon = styled(FaCheckCircle)`
-  color: var(--c-gray);
+  color: var(--c-blue);
   transform: scale(2.5);
   position: absolute;
   top: 25px;
   right: 30px;
 `
 const UncheckedIcon = styled(FaRegCircle)`
-  color: var(--c-gray);
+  color: var(--c-blue);
   transform: scale(2.5);
   position: absolute;
   top: 25px;

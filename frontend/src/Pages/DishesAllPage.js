@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import DishItem from '../Components/DishItem/DishItem'
 import HeaderOverlay from '../Components/HeaderOverlay/HeaderOverlay'
+import { sortByName } from '../lib/lib'
 
 DishOverview.propTypes = {
   dishes: PropTypes.array,
@@ -10,17 +12,35 @@ DishOverview.propTypes = {
   error: PropTypes.bool,
 }
 
-export default function DishOverview({ dishes, onToggleItem, error }) {
+export default function DishOverview({
+  dishes,
+  onToggleItem,
+  onCreate,
+  onClose,
+}) {
+  const [listName, setListName] = useState()
+
   let counter = dishes.filter((dish) => {
     return dish.isSelected
   }).length
 
+  const sortedDishes = sortByName(dishes)
+
+  const history = useHistory()
+
   return (
     <PageWrapper>
-      <HeaderOverlay>Dish Overview</HeaderOverlay>
+      <HeaderOverlay
+        onClose={handleClose}
+        onCreate={handleCreate}
+        counter={counter}
+        listName={listName}
+        setName={(name) => setListName(name)}>
+        Dish Overview
+      </HeaderOverlay>
       <ContentWrapper>
-        {dishes &&
-          dishes.map(({ id, name, isSelected }) => {
+        {sortedDishes &&
+          sortedDishes.map(({ id, name, isSelected }) => {
             return (
               <DishItem
                 key={id}
@@ -32,26 +52,27 @@ export default function DishOverview({ dishes, onToggleItem, error }) {
             )
           })}
       </ContentWrapper>
-      {counter === 0 ? (
-        <></>
-      ) : (
-        <>
-          <LinkButton to="/dishes/selected">
-            <Counter>{counter}</Counter>
-          </LinkButton>
-        </>
-      )}
     </PageWrapper>
   )
 
   function handleToggle(id) {
     const elIndex = dishes.findIndex((el) => el.id === id)
-    let newDishes = [...dishes]
-    newDishes[elIndex] = {
-      ...newDishes[elIndex],
-      isSelected: !newDishes[elIndex].isSelected,
+    let updatedDishes = [...dishes]
+    updatedDishes[elIndex] = {
+      ...updatedDishes[elIndex],
+      isSelected: !updatedDishes[elIndex].isSelected,
     }
-    onToggleItem(newDishes)
+    onToggleItem(updatedDishes)
+  }
+
+  function handleClose() {
+    onClose()
+    history.push('/home')
+  }
+
+  function handleCreate() {
+    onCreate(listName)
+    history.push('/lists/current')
   }
 }
 
