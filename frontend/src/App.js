@@ -4,6 +4,7 @@ import { Route, Switch, useHistory } from 'react-router-dom'
 import useDishes from './hooks/useDishes'
 import useLists from './hooks/useLists'
 import { addIsSelectedValue, sortByName } from './lib/lib'
+import AddItemsPage from './pages/AddItemsPage'
 import DishesAllPage from './pages/DishesAllPage'
 import HomePage from './pages/HomePage'
 import LandingPage from './pages/LandingPage'
@@ -62,6 +63,9 @@ function App() {
             currentList={currentList}
             onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
           />
+        </Route>
+        <Route path="/add">
+          <AddItemsPage />
         </Route>
       </Switch>
     </div>

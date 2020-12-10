@@ -4,9 +4,9 @@ import { getAllDishes } from '../services/fetchDishes'
 
 export default function useDishes() {
   const [allDishes, setAllDishes] = useState([])
-  const [selectedDishes, setSelectedDishes] = useState([])
   const [isLoading, setLoading] = useState(false)
   const [isError, setError] = useState(false)
+  let selectedDishes = allDishes.filter((dish) => dish.isSelected)
 
   useEffect(() => {
     setLoading(true)
@@ -16,10 +16,6 @@ export default function useDishes() {
       )
       .then(() => setLoading(false))
   }, [])
-
-  useEffect(() => {
-    setSelectedDishes(allDishes.filter((dish) => dish.isSelected))
-  }, [allDishes])
 
   return {
     allDishes,
