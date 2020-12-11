@@ -32,13 +32,30 @@ class ShoppingListRepository extends ServiceEntityRepository
      
     public function update (ShoppingList $list, $data) :ShoppingList {
 
+       
+
         empty($data['name']) ? true : $list->setName($data['name']);
         empty($data['items']) ? true : $list->setItems($data['items']);
+        //empty($data['active']) ? true : $list->setActive($data['active']);
+        $list->setActive($data['active']);
+        
+
         $this->_em->persist($list);
         $this->_em->flush();
         return $list;
     }
 
+    public function findActiveList ( $userId) {
+        
+        return
+        $this->createQueryBuilder ('l')
+        ->select ('l')
+        ->where ('l.user = ' . $userId)
+        ->andWhere ('l.active = 1')
+        ->getQuery()
+        ->getResult();
+
+    }
     
 
 }
