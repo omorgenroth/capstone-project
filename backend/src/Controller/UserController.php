@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Repository\UserRepository;
 use App\Serializer\UserSerializer;
 use App\Serializer\ShoppingListSerializer;
+use App\Repository\ShoppingListRepository;
 use App\Entity\ShoppingList;
 use App\Entity\User;
 
@@ -85,6 +86,39 @@ class UserController extends AbstractController
         
         return new JsonResponse(
             $serializer->serialize($userLists, 'json',
+                [
+                    
+                    AbstractNormalizer::IGNORED_ATTRIBUTES => ['user'],
+                    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                        return $object->getId();
+                    },
+                ]
+            ),
+            JsonResponse::HTTP_OK,
+            [],
+            true
+        );
+    }
+
+ /**
+     * @Route("/users/{id}/lists/active", name="Users_get_active_List",  methods={"GET"})
+     */
+    public function getActiveLists(
+        $id,
+        UserRepository $repository,
+        SerializerInterface $serializer,
+        ShoppingListRepository $listRepository
+        ): JsonResponse {
+        
+        $user = $repository->find($id);
+
+        if (is_null ($user)) {
+            return new JsonResponse(['error' => "User ID not found"], JsonResponse::HTTP_NOT_FOUND);
+        }
+        $activeList = $listRepository->findActiveList ($id);
+       
+        return new JsonResponse(
+            $serializer->serialize($activeList, 'json',
                 [
                     
                     AbstractNormalizer::IGNORED_ATTRIBUTES => ['user'],

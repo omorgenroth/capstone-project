@@ -72,8 +72,6 @@ export default function ShoppingListPage({ currentList, onCheckItem }) {
                             onClick={checkItem}
                           />
                         )
-                      } else {
-                        return <></>
                       }
                     })}
                   </AccordionPanel>
