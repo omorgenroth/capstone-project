@@ -9,25 +9,19 @@ import DishesAllPage from './pages/DishesAllPage'
 import HomePage from './pages/HomePage'
 import LandingPage from './pages/LandingPage'
 import ShoppingListPage from './pages/ShoppingListPage'
-import { saveList } from './services/fetchLists'
+import { saveList, updateList } from './services/fetchLists'
 
 function App() {
   const user = {
-    id: 4,
-    firstname: '1',
-    lastname: 'Skywalker',
-    email: 'leia@skywalker.com',
+    id: 10,
+    firstname: 'Oliver',
+    lastname: 'Morgenroth',
+    email: 'o@morgenroth.com',
   }
 
   const {
-    allDishes,
-    setAllDishes,
-    selectedDishes,
-    resetSelectedDishes,
-  } = useDishes()
-
-  const {
     currentList,
+    setCurrentList,
     userLists,
     setUserLists,
     updateCurrentList,
@@ -36,6 +30,13 @@ function App() {
   } = useLists({
     userId: user.id,
   })
+  console.log(currentList)
+  const {
+    allDishes,
+    setAllDishes,
+    selectedDishes,
+    resetSelectedDishes,
+  } = useDishes()
 
   const notifier = useToast()
 
@@ -74,10 +75,7 @@ function App() {
   function createIngredientList(listName) {
     let flatIngredients = []
     selectedDishes.forEach((dish) => {
-      let i
-      for (i = 0; i < dish.ingredients.length; i++) {
-        flatIngredients.push(dish.ingredients[i])
-      }
+      dish.ingredients.forEach((ingredient) => flatIngredients.push(ingredient))
     })
 
     const reducedIngredientList = flatIngredients.reduce(
@@ -97,6 +95,8 @@ function App() {
       },
       []
     )
+
+    console.log(reducedIngredientList)
     const sortedIngredientList = sortByName(reducedIngredientList)
 
     const ingredientList = addIsSelectedValue(sortedIngredientList)
@@ -104,18 +104,19 @@ function App() {
       name: listName ? listName : '',
       userId: user.id,
       items: ingredientList,
+      active: true,
     }
+    updateList({ ...currentList, active: false }, currentList.id)
     resetSelectedDishes()
     createList(listObject)
   }
 
   async function createList(list) {
     const savedList = await saveList(list)
-    setUserLists([...userLists, savedList[savedList.length - 1]])
+    await setCurrentList(savedList)
 
     notifier({
-      description:
-        'Created a List with the ID: ' + savedList[savedList.length - 1].id,
+      description: 'Created a List with the ID: ' + savedList.id,
       status: 'success',
       duration: 2000,
       isClosable: true,

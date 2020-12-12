@@ -36,7 +36,6 @@ class ShoppingListRepository extends ServiceEntityRepository
 
         empty($data['name']) ? true : $list->setName($data['name']);
         empty($data['items']) ? true : $list->setItems($data['items']);
-        //empty($data['active']) ? true : $list->setActive($data['active']);
         $list->setActive($data['active']);
         
 
