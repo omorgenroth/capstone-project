@@ -29,7 +29,7 @@ function App() {
   } = useLists({
     userId: user.id,
   })
-  console.log(currentList)
+
   const {
     allDishes,
     setAllDishes,
@@ -66,7 +66,10 @@ function App() {
           />
         </Route>
         <Route path="/addItems">
-          <AddItemsPage currentList={currentList} />
+          <AddItemsPage
+            currentList={currentList}
+            updateCurrentList={(updatedList) => setCurrentList(updatedList)}
+          />
         </Route>
       </Switch>
     </div>

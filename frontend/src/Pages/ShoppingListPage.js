@@ -22,6 +22,7 @@ ShoppingListPage.propTypes = {
 }
 
 export default function ShoppingListPage({ currentList, onCheckItem }) {
+  console.log(currentList)
   const history = useHistory()
   const ingredients = currentList.items
   const categoriesWithDuplicates =

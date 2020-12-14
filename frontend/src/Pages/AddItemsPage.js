@@ -14,27 +14,31 @@ import {
   NumberInput,
   NumberInputField,
   Tag,
-  TagLabel,
   TagCloseButton,
+  TagLabel,
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useEffect, useState, useRef } from 'react'
-import AddItemForm from '../components/AddItemForm/AddItemForm'
-import HeaderOverlay from '../components/HeaderOverlay/HeaderOverlay'
+import { useEffect, useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import AddItemHeader from '../components/AddItemHeader/AddItemHeader'
 import SearchResultItem from '../components/SearchResultItem'
 import { filterIngredientsByName } from '../services/fetchIngredients'
-import { useHistory } from 'react-router-dom'
+import { updateList } from '../services/fetchLists'
 
-export default function AddItemsPage(currentList) {
+export default function AddItemsPage({ currentList }) {
   const [searchValue, setSearchValue] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [newItems, setNewItems] = useState([])
   const [quantity, setQuantity] = useState()
+  const [isLoading, setLoading] = useState(false)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const currentListRef = useRef(currentList)
+
   const selection = useRef(null)
   const history = useHistory()
+
+  console.log(searchValue)
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -46,15 +50,38 @@ export default function AddItemsPage(currentList) {
     return () => clearTimeout(delay)
   }, [searchValue])
 
-  console.log(newItems)
-
   return (
     <Grid templateRows="60px auto" h="100vh">
-      <HeaderOverlay
-        onClose={() => history.push('/lists/current')}
+      <AddItemHeader
         counter={newItems.length}
+        onClose={() => history.push('lists/current')}
+        onCreate={updateCurrList}
+        inputValue={searchValue}
+        setInputValue={(value) => setSearchValue(value)}
+        loading={isLoading}
       />
+
       <Box gridRow="2/3">
+        <Box mt="20px" px="15px">
+          <Text fontWeight="700" py="10px">
+            Ergebnisse:
+          </Text>
+
+          {searchResults.length > 0 ? (
+            searchResults.map((result) => {
+              return (
+                <SearchResultItem
+                  key={result.id}
+                  props={result}
+                  onClick={(props) => createItem(props)}>
+                  {result.name}
+                </SearchResultItem>
+              )
+            })
+          ) : (
+            <div> </div>
+          )}
+        </Box>
         <Box>
           {newItems &&
             newItems.map((item) => {
@@ -74,31 +101,6 @@ export default function AddItemsPage(currentList) {
                 </Tag>
               )
             })}
-        </Box>
-
-        <AddItemForm
-          nameValue={searchValue}
-          setNameValue={(value) => setSearchValue(value)}
-        />
-        <Box mt="20px" px="15px">
-          <Text fontWeight="700" py="10px">
-            Ergebnisse:
-          </Text>
-
-          {searchResults.length > 0 ? (
-            searchResults.map((result) => {
-              return (
-                <SearchResultItem
-                  key={result.id}
-                  props={result}
-                  onClick={(props) => createItem(props)}>
-                  {result.name}
-                </SearchResultItem>
-              )
-            })
-          ) : (
-            <div> No Results..</div>
-          )}
         </Box>
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} size="xs">
@@ -157,5 +159,22 @@ export default function AddItemsPage(currentList) {
     setSearchValue('')
     setSearchResults('')
     onClose()
+  }
+  function updateCurrList() {
+    const currList = currentList
+    newItems.forEach((newItem) => {
+      const index = currList.items.findIndex((item) => item.id === newItem.id)
+      if (index >= 0) {
+        currList.items[index].quantity += newItem.quantity
+      } else {
+        currList.items.push(newItem)
+      }
+    })
+
+    setLoading(true)
+    updateList(currList, currList.id)
+      .then((res) => console.log(res))
+      .then(() => setLoading(false))
+      .then(() => history.push('/lists/current'))
   }
 }

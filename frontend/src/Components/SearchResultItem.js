@@ -11,6 +11,8 @@ export default function SearchResultItem({ props, children, onClick }) {
           onClick={() => onClick(props)}
           size="xs"
           icon={<AddIcon />}
+          bg="primaryGreen.500"
+          color="primaryBlue.500"
         />
       </Box>
     </Grid>
