@@ -5,11 +5,12 @@ import { updateList } from '../services/fetchLists'
 export default function useLists({ userId }) {
   const [userLists, setUserLists] = useState([])
   const [currentList, setCurrentList] = useState({})
+  const [isLoadingLists, setLoadingLists] = useState(true)
 
   useEffect(() => {
-    getUserLists(userId)
-      .then((data) => (data.error ? console.log('Error') : setUserLists(data)))
-      .then(() => console.log('Loading finished'))
+    getUserLists(userId).then((data) =>
+      data.error ? console.log('Error') : setUserLists(data)
+    )
 
     getActiveUserList(userId)
       .then((data) =>
@@ -17,7 +18,7 @@ export default function useLists({ userId }) {
           ? console.log('Error')
           : setCurrentList(data[data.length - 1])
       )
-      .then(() => console.log('Loading finished'))
+      .then(() => setLoadingLists(false))
   }, [])
 
   return {
@@ -26,6 +27,7 @@ export default function useLists({ userId }) {
     setUserLists,
     updateCurrentList,
     setCurrentList,
+    isLoadingLists,
   }
 
   function updateCurrentList(updatedItems) {

@@ -25,8 +25,7 @@ function App() {
     userLists,
     setUserLists,
     updateCurrentList,
-    isLoading,
-    isError,
+    isLoadingLists,
   } = useLists({
     userId: user.id,
   })
@@ -42,11 +41,12 @@ function App() {
 
   const history = useHistory()
 
+  console.log(currentList)
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LandingPage loading={isLoading} error={isError} />
+          <LandingPage loading={isLoadingLists} />
         </Route>
         <Route path="/home">
           <HomePage currentList={currentList} />
@@ -65,8 +65,8 @@ function App() {
             onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
           />
         </Route>
-        <Route path="/add">
-          <AddItemsPage />
+        <Route path="/addItems">
+          <AddItemsPage currentList={currentList} />
         </Route>
       </Switch>
     </div>
@@ -113,10 +113,12 @@ function App() {
 
   async function createList(list) {
     const savedList = await saveList(list)
-    await setCurrentList(savedList)
+    const listObject = savedList[savedList.length - 1]
+
+    await setCurrentList(listObject)
 
     notifier({
-      description: 'Created a List with the ID: ' + savedList.id,
+      description: 'Created a List with the ID: ' + listObject.id,
       status: 'success',
       duration: 2000,
       isClosable: true,

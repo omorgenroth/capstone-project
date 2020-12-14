@@ -29,7 +29,7 @@ export default function DishOverview({
   const [isLoading, setLoading] = useState(false)
 
   return (
-    <Grid columns="60px auto">
+    <Grid rows="60px auto">
       <HeaderOverlay
         onClose={handleClose}
         onCreate={handleCreate}

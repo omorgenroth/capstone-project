@@ -13,6 +13,8 @@ import IngredientListItem from '../components/IngredientListItem/IngredientListI
 import NavigationBar from '../components/NavigationBar/NavigationBar'
 import { sortByName } from '../lib/lib'
 import PropTypes from 'prop-types'
+import FloatingButton from '../components/FloatingButton/FloatingButton'
+import { useHistory } from 'react-router-dom'
 
 ShoppingListPage.propTypes = {
   currentList: PropTypes.object.isRequired,
@@ -20,7 +22,7 @@ ShoppingListPage.propTypes = {
 }
 
 export default function ShoppingListPage({ currentList, onCheckItem }) {
-  console.log(currentList)
+  const history = useHistory()
   const ingredients = currentList.items
   const categoriesWithDuplicates =
     ingredients &&
@@ -81,6 +83,7 @@ export default function ShoppingListPage({ currentList, onCheckItem }) {
             })}
         </Accordion>
       </Box>
+      <FloatingButton onClick={() => history.push('/addItems')} />
       <NavigationBar route="current" />
     </Grid>
   )
