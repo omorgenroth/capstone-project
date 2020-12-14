@@ -8,7 +8,7 @@ use App\Entity\Ingredient;
 use App\Entity\IngredientCategory;
 
 
-class DishSerializer {
+class IngredientSerializer {
 
     private $elementAsArray = [];
 
