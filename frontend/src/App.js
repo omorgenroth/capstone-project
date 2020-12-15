@@ -8,6 +8,7 @@ import AddItemsPage from './pages/AddItemsPage'
 import DishesAllPage from './pages/DishesAllPage'
 import HomePage from './pages/HomePage'
 import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
 import ShoppingListPage from './pages/ShoppingListPage'
 import { saveList, updateList } from './services/fetchLists'
 
@@ -70,6 +71,9 @@ function App() {
             currentList={currentList}
             updateCurrentList={(updatedList) => setCurrentList(updatedList)}
           />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
         </Route>
       </Switch>
     </div>
