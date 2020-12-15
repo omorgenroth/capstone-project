@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom'
 
 export default function LoginPage() {
   const CreateAccountLink = chakra(Link)
+
   return (
     <Flex
       width="full"
