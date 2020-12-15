@@ -12,13 +12,12 @@ export default function IngredientListItem({ props, onClick }) {
   const UncheckedIcon = chakra(FaRegCircle)
   return (
     <Grid
-      onClick={() => onClick(props.id)}
       checked={props.isSelected}
       templateColumns="25px auto"
       textDecoration={props.isSelected ? 'line-through' : 'none'}
       color={props.isSelected ? 'lightgray' : 'primaryBlue.500'}
       fontSize="0.85rem">
-      <Flex align="center">
+      <Flex onClick={() => onClick(props.id)} align="center">
         {props.isSelected ? (
           <CheckedIcon data-testid="checked" transform="scale(1)" />
         ) : (
