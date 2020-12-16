@@ -18,7 +18,8 @@ class ShoppingListSerializer {
             'id' => $element->getId(),
             'name' => $element->getName(),
             'items' => $element->getItems(),
-            'created'=> $element->getCreatedDate()
+            'created'=> $element->getCreatedDate(),
+            'active' => $element->getActive()
             
         ];       
         return($this);
@@ -47,6 +48,7 @@ class ShoppingListSerializer {
             $classObject->setName($postData->name);
             $classObject->setItems($postData->items);
             $classObject->setCreatedDate(date_create());
+            $classObject->setActive($postData->active);
 
            
             

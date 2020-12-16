@@ -10,12 +10,11 @@ LandingPage.propTypes = {
 
 export default function LandingPage({ loading, error }) {
   let history = useHistory()
+  console.log(loading)
 
-  setTimeout(() => {
-    if (!loading && !error) {
-      history.push('/home')
-    }
-  }, 2000)
+  if (!loading) {
+    history.push('/home')
+  }
 
   return (
     <Flex
