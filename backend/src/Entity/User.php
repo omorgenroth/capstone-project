@@ -6,12 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -178,6 +181,38 @@ class User
             }
         }
 
-        return $this;
+        return $this;    
     }
+
+
+     /**
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+    return array('ROLE_USER');
+    }
+
+    /**
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+    return null;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        
+    }  
+
+    public function getUsername() {}
+
 }
