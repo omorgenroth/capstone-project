@@ -80,7 +80,7 @@ class ShoppingListController extends AbstractController
             );
     }
 
-       /**
+    /**
      * @Route("/lists/{id}", name="Lists_update", methods={"PUT"})
      */
     public function update( 
@@ -100,13 +100,14 @@ class ShoppingListController extends AbstractController
         
        
         $data = json_decode($request->getContent(), true);
-        // $errors = $validator->validate($data);
-            
-        // if ($errors->count() !== 0) {
-        //         return new JsonResponse(["error" => "Validation failed"], JsonResponse::HTTP_BAD_REQUEST);
-        //     }
-            
+        $errors = $validator->validate($data);
+        
+         if ($errors->count() !== 0) {
+                 return new JsonResponse(["error" => "Validation failed"], JsonResponse::HTTP_BAD_REQUEST);
+            }
+        
          $repository->update($list, $data);
+        
 
         return new JsonResponse(['Success' => "List updated"]);
     
