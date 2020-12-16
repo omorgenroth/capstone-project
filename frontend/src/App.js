@@ -1,6 +1,8 @@
 import { useToast } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
+import AppStateContext from './context/AppStateContext'
+import UserContext from './context/UserContext'
 import useDishes from './hooks/useDishes'
 import useLists from './hooks/useLists'
 import { addIsSelectedValue, sortByName } from './lib/lib'
@@ -10,26 +12,20 @@ import HomePage from './pages/HomePage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import ShoppingListPage from './pages/ShoppingListPage'
+import ProtectedRoute from './ProtectedRoute'
 import { saveList, updateList } from './services/fetchLists'
 
 function App() {
-  const user = {
-    id: 10,
-    firstname: 'Oliver',
-    lastname: 'Morgenroth',
-    email: 'o@morgenroth.com',
-  }
+  const [user, setUser] = useState()
+  const [state, setState] = useState()
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const { currentList, setCurrentList, updateCurrentList } = useLists()
 
-  const {
-    currentList,
-    setCurrentList,
-    userLists,
-    setUserLists,
-    updateCurrentList,
-    isLoadingLists,
-  } = useLists({
-    userId: user.id,
-  })
+  useEffect(() => {
+    if (user !== undefined) {
+      setIsAuthorized(true)
+    }
+  }, [user])
 
   const {
     allDishes,
@@ -41,41 +37,46 @@ function App() {
   const notifier = useToast()
 
   const history = useHistory()
-
+  console.log(user)
   console.log(currentList)
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/">
-          <LandingPage loading={isLoadingLists} />
-        </Route>
-        <Route path="/home">
-          <HomePage currentList={currentList} />
-        </Route>
-        <Route path="/dishes">
-          <DishesAllPage
-            dishes={allDishes}
-            onToggleItem={(newDishes) => setAllDishes(newDishes)}
-            onCreate={(listName) => createIngredientList(listName)}
-            onClose={() => resetSelectedDishes()}
-          />
-        </Route>
-        <Route path="/lists/current">
-          <ShoppingListPage
-            currentList={currentList}
-            onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
-          />
-        </Route>
-        <Route path="/addItems">
-          <AddItemsPage
-            currentList={currentList}
-            updateCurrentList={(updatedList) => setCurrentList(updatedList)}
-          />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-      </Switch>
+      <AppStateContext.Provider value={{ state, setState }}>
+        <UserContext.Provider
+          value={{
+            user,
+            setUser,
+            currentList,
+            setCurrentList,
+            updateCurrentList,
+          }}>
+          <Switch>
+            <Route exact path="/">
+              <LandingPage />
+            </Route>
+            <ProtectedRoute path="/home" isAuthorized={isAuthorized}>
+              <HomePage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/dishes" isAuthorized={isAuthorized}>
+              <DishesAllPage
+                dishes={allDishes}
+                onToggleItem={(newDishes) => setAllDishes(newDishes)}
+                onCreate={(listName) => createIngredientList(listName)}
+                onClose={() => resetSelectedDishes()}
+              />
+            </ProtectedRoute>
+            <ProtectedRoute path="/lists/current" isAuthorized={isAuthorized}>
+              <ShoppingListPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/addItems" isAuthorized={isAuthorized}>
+              <AddItemsPage />
+            </ProtectedRoute>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+          </Switch>
+        </UserContext.Provider>
+      </AppStateContext.Provider>
     </div>
   )
 

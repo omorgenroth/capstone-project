@@ -19,14 +19,16 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AddItemHeader from '../components/AddItemHeader/AddItemHeader'
 import SearchResultItem from '../components/SearchResultItem'
+import UserContext from '../context/UserContext'
 import { filterIngredientsByName } from '../services/fetchIngredients'
 import { updateList } from '../services/fetchLists'
 
-export default function AddItemsPage({ currentList }) {
+export default function AddItemsPage() {
+  const { currentList } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [newItems, setNewItems] = useState([])
@@ -55,7 +57,7 @@ export default function AddItemsPage({ currentList }) {
       <AddItemHeader
         counter={newItems.length}
         onClose={() => history.push('lists/current')}
-        onCreate={updateCurrList}
+        onCreate={updateCurrentList}
         inputValue={searchValue}
         setInputValue={(value) => setSearchValue(value)}
         loading={isLoading}
@@ -160,19 +162,20 @@ export default function AddItemsPage({ currentList }) {
     setSearchResults('')
     onClose()
   }
-  function updateCurrList() {
-    const currList = currentList
+  function updateCurrentList() {
     newItems.forEach((newItem) => {
-      const index = currList.items.findIndex((item) => item.id === newItem.id)
+      const index = currentList.items.findIndex(
+        (item) => item.id === newItem.id
+      )
       if (index >= 0) {
-        currList.items[index].quantity += newItem.quantity
+        currentList.items[index].quantity += newItem.quantity
       } else {
-        currList.items.push(newItem)
+        currentList.items.push(newItem)
       }
     })
 
     setLoading(true)
-    updateList(currList, currList.id)
+    updateList(currentList, currentList.id)
       .then((res) => console.log(res))
       .then(() => setLoading(false))
       .then(() => history.push('/lists/current'))

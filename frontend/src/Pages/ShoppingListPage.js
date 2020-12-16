@@ -15,14 +15,16 @@ import { sortByName } from '../lib/lib'
 import PropTypes from 'prop-types'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import { useHistory } from 'react-router-dom'
+import { useContext } from 'react'
+import UserContext from '../context/UserContext'
 
 ShoppingListPage.propTypes = {
   currentList: PropTypes.object.isRequired,
   onCheckItem: PropTypes.func.isRequired,
 }
 
-export default function ShoppingListPage({ currentList, onCheckItem }) {
-  console.log(currentList)
+export default function ShoppingListPage() {
+  const { currentList, updateCurrentList } = useContext(UserContext)
   const history = useHistory()
   const ingredients = currentList.items
   const categoriesWithDuplicates =
@@ -97,6 +99,6 @@ export default function ShoppingListPage({ currentList, onCheckItem }) {
       isSelected: !newIngredients[elIndex].isSelected,
     }
     console.log(newIngredients)
-    onCheckItem(newIngredients)
+    updateCurrentList(newIngredients)
   }
 }

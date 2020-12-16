@@ -1,30 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getActiveUserList, getUserLists } from '../services/fetchUsers'
 import { updateList } from '../services/fetchLists'
+import UserContext from '../context/UserContext'
 
-export default function useLists({ userId }) {
-  const [userLists, setUserLists] = useState([])
+export default function useLists() {
+  const { user } = useContext(UserContext)
+
   const [currentList, setCurrentList] = useState({})
   const [isLoadingLists, setLoadingLists] = useState(true)
 
+  console.log(user)
   useEffect(() => {
-    getUserLists(userId).then((data) =>
-      data.error ? console.log('Error') : setUserLists(data)
-    )
-
-    getActiveUserList(userId)
-      .then((data) =>
-        data.error
-          ? console.log('Error')
-          : setCurrentList(data[data.length - 1])
-      )
-      .then(() => setLoadingLists(false))
-  }, [])
+    if (user !== undefined) {
+      getActiveUserList(user.id)
+        .then((data) =>
+          data.error
+            ? console.log('Error')
+            : setCurrentList(data[data.length - 1])
+        )
+        .then(() => setLoadingLists(false))
+    }
+  }, [user])
 
   return {
     currentList,
-    userLists,
-    setUserLists,
     updateCurrentList,
     setCurrentList,
     isLoadingLists,

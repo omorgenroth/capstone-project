@@ -15,13 +15,13 @@ import { Link, useHistory } from 'react-router-dom'
 import AppStateContext from '../context/AppStateContext'
 import UserContext from '../context/UserContext'
 import { loginUser } from '../services/fetchAuthentication'
-import { getUserById } from '../services/fetchUsers'
+import { getActiveUserList, getUserById } from '../services/fetchUsers'
 import { saveLocally } from '../services/localStorage'
 
 export default function LoginPage() {
   const CreateAccountLink = chakra(Link)
-  const { setUser } = useContext(UserContext)
-  const { appState, setAppState } = useContext(AppStateContext)
+  const { setUser, setCurrentList } = useContext(UserContext)
+  const { state, setState } = useContext(AppStateContext)
 
   const history = useHistory()
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
           <chakra.form>
             <FormControl
               isRequired
-              isInvalid={appState === 'error' ? true : false}>
+              isInvalid={state === 'error' ? true : false}>
               <FormLabel>Email</FormLabel>
               <Input
                 name="email"
@@ -54,7 +54,7 @@ export default function LoginPage() {
             <FormControl
               mt={6}
               isRequired
-              isInvalid={appState === 'error' ? true : false}>
+              isInvalid={state === 'error' ? true : false}>
               <FormLabel>Passwort</FormLabel>
               <Input
                 name="password"
@@ -71,7 +71,7 @@ export default function LoginPage() {
               width="full"
               mt={4}
               type="submit"
-              isLoading={appState === 'loading' ? true : false}
+              isLoading={state === 'loading' ? true : false}
               loadingText="Submitting"
               onClick={(e) => handleUserLogin(e)}>
               Sign In
@@ -91,15 +91,19 @@ export default function LoginPage() {
     const email = form.email.value
     const password = form.password.value
     form.reset()
-    setAppState('loading')
+    setState('loading')
     const tokenData = await loginUser({ email: email, password: password })
-    saveLocally('userData', tokenData)
     if (tokenData.error) {
-      setAppState('error')
+      setState('error')
+      console.log('error mit token')
     } else {
+      console.log(tokenData)
+      saveLocally('userData', tokenData)
       const userData = await getUserById(tokenData.user)
-      await setUser(userData[userData.length - 1])
-      await history.push('/home')
+      setUser(userData[userData.length - 1])
+      const currList = await getActiveUserList(tokenData.user)
+      setCurrentList(currList[currList.length - 1])
+      history.push('/home')
     }
   }
 }

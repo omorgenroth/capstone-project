@@ -1,7 +1,19 @@
-import { Avatar, Flex, Image } from '@chakra-ui/react'
+import {
+  Avatar,
+  Flex,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from '@chakra-ui/react'
+import { useContext } from 'react'
 import logoSmall from '../../assets/logo_sm.png'
+import UserContext from '../../context/UserContext'
 
 export default function Header() {
+  const { user } = useContext(UserContext)
+
   return (
     <Flex
       pos="fixed"
@@ -15,7 +27,7 @@ export default function Header() {
       zIndex="10">
       <Image src={logoSmall} boxSize="45px" />
       <Flex pos="fixed" top="12px" right="26px">
-        <Avatar size="sm" name="Oliver Morgenroth" />
+        <Avatar size="sm" name={user.firstname + ' ' + user.lastname} />
       </Flex>
     </Flex>
   )
