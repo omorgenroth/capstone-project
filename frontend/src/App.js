@@ -9,15 +9,26 @@ import DishesAllPage from './pages/DishesAllPage'
 import HomePage from './pages/HomePage'
 import LandingPage from './pages/LandingPage'
 import ShoppingListPage from './pages/ShoppingListPage'
-import { saveList } from './services/fetchLists'
+import { saveList, updateList } from './services/fetchLists'
 
 function App() {
   const user = {
-    id: 5,
-    firstname: '1',
-    lastname: 'Skywalker',
-    email: 'leia@skywalker.com',
+    id: 10,
+    firstname: 'Oliver',
+    lastname: 'Morgenroth',
+    email: 'o@morgenroth.com',
   }
+
+  const {
+    currentList,
+    setCurrentList,
+    userLists,
+    setUserLists,
+    updateCurrentList,
+    isLoadingLists,
+  } = useLists({
+    userId: user.id,
+  })
 
   const {
     allDishes,
@@ -26,26 +37,16 @@ function App() {
     resetSelectedDishes,
   } = useDishes()
 
-  const {
-    currentList,
-    userLists,
-    setUserLists,
-    updateCurrentList,
-    isLoading,
-    isError,
-  } = useLists({
-    userId: user.id,
-  })
-
   const notifier = useToast()
 
   const history = useHistory()
 
+  console.log(currentList)
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LandingPage loading={isLoading} error={isError} />
+          <LandingPage loading={isLoadingLists} />
         </Route>
         <Route path="/home">
           <HomePage currentList={currentList} />
@@ -64,8 +65,11 @@ function App() {
             onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
           />
         </Route>
-        <Route path="/add">
-          <AddItemsPage />
+        <Route path="/addItems">
+          <AddItemsPage
+            currentList={currentList}
+            updateCurrentList={(updatedList) => setCurrentList(updatedList)}
+          />
         </Route>
       </Switch>
     </div>
@@ -74,10 +78,7 @@ function App() {
   function createIngredientList(listName) {
     let flatIngredients = []
     selectedDishes.forEach((dish) => {
-      let i
-      for (i = 0; i < dish.ingredients.length; i++) {
-        flatIngredients.push(dish.ingredients[i])
-      }
+      dish.ingredients.forEach((ingredient) => flatIngredients.push(ingredient))
     })
 
     const reducedIngredientList = flatIngredients.reduce(
@@ -97,6 +98,8 @@ function App() {
       },
       []
     )
+
+    console.log(reducedIngredientList)
     const sortedIngredientList = sortByName(reducedIngredientList)
 
     const ingredientList = addIsSelectedValue(sortedIngredientList)
@@ -104,18 +107,21 @@ function App() {
       name: listName ? listName : '',
       userId: user.id,
       items: ingredientList,
+      active: true,
     }
+    updateList({ ...currentList, active: false }, currentList.id)
     resetSelectedDishes()
     createList(listObject)
   }
 
   async function createList(list) {
     const savedList = await saveList(list)
-    setUserLists([...userLists, savedList[savedList.length - 1]])
+    const listObject = savedList[savedList.length - 1]
+
+    await setCurrentList(listObject)
 
     notifier({
-      description:
-        'Created a List with the ID: ' + savedList[savedList.length - 1].id,
+      description: 'Created a List with the ID: ' + listObject.id,
       status: 'success',
       duration: 2000,
       isClosable: true,
