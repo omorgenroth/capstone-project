@@ -38,10 +38,11 @@ export default function AddItemHeader({
       <Container>
         <Input
           id="searchvalue"
-          placeholder="Filter.."
+          placeholder="Starte eine Suche.."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           textAlign="center"
+          bg="white"
           color="primaryBlue.500"
           w="20ch"
           h="25px"

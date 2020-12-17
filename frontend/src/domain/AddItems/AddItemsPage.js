@@ -21,11 +21,11 @@ import {
 } from '@chakra-ui/react'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import AddItemHeader from '../components/AddItemHeader/AddItemHeader'
-import SearchResultItem from '../components/SearchResultItem'
-import UserContext from '../context/UserContext'
-import { filterIngredientsByName } from '../services/fetchIngredients'
-import { updateList } from '../services/fetchLists'
+import AddItemHeader from './AddItemHeader/AddItemHeader'
+import SearchResultItem from './SearchResultItem/SearchResultItem'
+import UserContext from '../../context/UserContext'
+import { filterIngredientsByName } from '../../services/fetchIngredients'
+import { updateList } from '../../services/fetchLists'
 
 export default function AddItemsPage() {
   const { currentList } = useContext(UserContext)

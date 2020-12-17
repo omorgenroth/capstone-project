@@ -2,12 +2,11 @@ import { Grid, GridItem } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 import FloatingButton from '../components/FloatingButton/FloatingButton'
 import Header from '../components/Header/Header'
-import ListCard from '../components/ListCard/ListCard'
+import ListCard from '../domain/ShoppingList/ShoppingListCard/ShoppingListCard'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
 import PropTypes from 'prop-types'
 import { useContext } from 'react'
 import UserContext from '../context/UserContext'
-import SideBar from '../components/SideBar/SideBar'
 
 HomePage.propTypes = {
   currentList: PropTypes.object.isRequired,

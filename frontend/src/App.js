@@ -6,12 +6,12 @@ import UserContext from './context/UserContext'
 import useDishes from './hooks/useDishes'
 import useLists from './hooks/useLists'
 import { addIsSelectedValue, sortByName } from './lib/lib'
-import AddItemsPage from './pages/AddItemsPage'
-import DishesAllPage from './pages/DishesAllPage'
+import AddItemsPage from './domain/AddItems/AddItemsPage'
+import DishesAllPage from './domain/Dishes/DishSelectionPage'
 import HomePage from './pages/HomePage'
 import LandingPage from './pages/LandingPage'
-import LoginPage from './pages/LoginPage'
-import ShoppingListPage from './pages/ShoppingListPage'
+import LoginPage from './domain/Login/LoginPage'
+import ShoppingListPage from './domain/ShoppingList/ShoppingListPage'
 import ProtectedRoute from './ProtectedRoute'
 import { saveList, updateList } from './services/fetchLists'
 
@@ -114,7 +114,10 @@ function App() {
       items: ingredientList,
       active: true,
     }
-    updateList({ ...currentList, active: false }, currentList.id)
+    if (currentList) {
+      updateList({ ...currentList, active: false }, currentList.id)
+    }
+
     resetSelectedDishes()
     createList(listObject)
   }

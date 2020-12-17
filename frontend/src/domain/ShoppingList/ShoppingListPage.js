@@ -8,15 +8,15 @@ import {
   Grid,
   Heading,
 } from '@chakra-ui/react'
-import Header from '../components/Header/Header'
-import IngredientListItem from '../components/IngredientListItem/IngredientListItem'
-import NavigationBar from '../components/NavigationBar/NavigationBar'
-import { sortByName } from '../lib/lib'
+import Header from '../../components/Header/Header'
+import ShoppingListItem from './ShoppingListItem/ShoppingListItem'
+import NavigationBar from '../../components/NavigationBar/NavigationBar'
+import { sortByName } from '../../lib/lib'
 import PropTypes from 'prop-types'
-import FloatingButton from '../components/FloatingButton/FloatingButton'
+import FloatingButton from '../../components/FloatingButton/FloatingButton'
 import { useHistory } from 'react-router-dom'
 import { useContext } from 'react'
-import UserContext from '../context/UserContext'
+import UserContext from '../../context/UserContext'
 
 ShoppingListPage.propTypes = {
   currentList: PropTypes.object.isRequired,
@@ -72,7 +72,7 @@ export default function ShoppingListPage() {
                     {ingredients.map((ingredient) => {
                       if (category.id === ingredient.categoryId) {
                         return (
-                          <IngredientListItem
+                          <ShoppingListItem
                             key={ingredient.id}
                             props={ingredient}
                             onClick={checkItem}
