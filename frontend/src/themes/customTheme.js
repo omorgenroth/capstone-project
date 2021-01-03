@@ -9,6 +9,10 @@ const customTheme = extendTheme({
       500: '#1a212c',
     },
   },
+  fonts: {
+    heading: '"Avenir Next", sans-serif',
+    body: '"Comfortaa", cursive',
+  },
 })
 
 export default customTheme

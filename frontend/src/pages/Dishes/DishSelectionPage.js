@@ -2,9 +2,9 @@ import { Grid, Skeleton } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import DishItem from '../components/DishItem/DishItem'
-import HeaderOverlay from '../components/HeaderOverlay/HeaderOverlay'
-import { sortByName } from '../lib/lib'
+import DishItem from './DishItem/DishItem'
+import DishSelectionHeader from './DishSelectionHeader/DishSelectionHeader'
+import { sortByName } from '../../lib/lib'
 
 DishOverview.propTypes = {
   dishes: PropTypes.array,
@@ -30,7 +30,7 @@ export default function DishOverview({
 
   return (
     <Grid rows="60px auto">
-      <HeaderOverlay
+      <DishSelectionHeader
         onClose={handleClose}
         onCreate={handleCreate}
         counter={counter}

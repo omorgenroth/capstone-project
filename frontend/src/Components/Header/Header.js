@@ -1,7 +1,23 @@
-import { Avatar, Flex, Image } from '@chakra-ui/react'
+import {
+  Avatar,
+  Flex,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from '@chakra-ui/react'
+import { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import logoSmall from '../../assets/logo_sm.png'
+import UserContext from '../../context/UserContext'
+import AppStateContext from '../../context/AppStateContext'
 
 export default function Header() {
+  const { user } = useContext(UserContext)
+  const { state, setState } = useContext(AppStateContext)
+  const history = useHistory()
+
   return (
     <Flex
       pos="fixed"
@@ -15,8 +31,23 @@ export default function Header() {
       zIndex="10">
       <Image src={logoSmall} boxSize="45px" />
       <Flex pos="fixed" top="12px" right="26px">
-        <Avatar size="sm" name="Oliver Morgenroth" />
+        <Menu width="20px" placement="auto">
+          <MenuButton>
+            <Avatar size="sm" name={user.firstname + ' ' + user.lastname} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem bg="teal" fontSize="0.7rem" onClick={logoutUser}>
+              Logout
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
     </Flex>
   )
+
+  function logoutUser() {
+    localStorage.removeItem('userData')
+    history.push('/login')
+    setState('')
+  }
 }

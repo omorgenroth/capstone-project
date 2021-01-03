@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Service\PasswordEncoder;
 use App\Repository\UserRepository;
 use App\Serializer\UserSerializer;
 use App\Serializer\ShoppingListSerializer;
@@ -141,7 +142,8 @@ class UserController extends AbstractController
         Request $request, 
         UserRepository $repository, 
         UserSerializer $serializer,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        PasswordEncoder  $passwordEncoder
     ): JsonResponse {
         
         $user = $serializer->deserialize($request->getContent());
@@ -151,7 +153,7 @@ class UserController extends AbstractController
         if ($errors->count() !== 0) {
             return new JsonResponse(["error" => "Validation failed"], JsonResponse::HTTP_BAD_REQUEST);
         }
-
+        $passwordEncoder->encode($user->getPassword(), $user);
         $repository->save($user);
         
         return new JsonResponse(

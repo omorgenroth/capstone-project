@@ -1,34 +1,31 @@
 import { useToast } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
+import AppStateContext from './context/AppStateContext'
+import UserContext from './context/UserContext'
 import useDishes from './hooks/useDishes'
 import useLists from './hooks/useLists'
 import { addIsSelectedValue, sortByName } from './lib/lib'
-import AddItemsPage from './pages/AddItemsPage'
-import DishesAllPage from './pages/DishesAllPage'
-import HomePage from './pages/HomePage'
-import LandingPage from './pages/LandingPage'
-import ShoppingListPage from './pages/ShoppingListPage'
+import AddItemsPage from './pages/AddItems/AddItemsPage'
+import DishSelectionPage from './pages/Dishes/DishSelectionPage'
+import HomePage from './pages/Home/HomePage'
+import PreloaderPage from './pages/Preloader/PreloaderPage'
+import LoginPage from './pages/Login/LoginPage'
+import ShoppingListPage from './pages/ShoppingList/ShoppingListPage'
+import ProtectedRoute from './ProtectedRoute'
 import { saveList, updateList } from './services/fetchLists'
 
 function App() {
-  const user = {
-    id: 10,
-    firstname: 'Oliver',
-    lastname: 'Morgenroth',
-    email: 'o@morgenroth.com',
-  }
+  const [user, setUser] = useState()
+  const [state, setState] = useState()
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const { currentList, setCurrentList, updateCurrentList } = useLists()
 
-  const {
-    currentList,
-    setCurrentList,
-    userLists,
-    setUserLists,
-    updateCurrentList,
-    isLoadingLists,
-  } = useLists({
-    userId: user.id,
-  })
+  useEffect(() => {
+    if (user !== undefined) {
+      setIsAuthorized(true)
+    }
+  }, [user])
 
   const {
     allDishes,
@@ -40,38 +37,46 @@ function App() {
   const notifier = useToast()
 
   const history = useHistory()
-
+  console.log(user)
   console.log(currentList)
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/">
-          <LandingPage loading={isLoadingLists} />
-        </Route>
-        <Route path="/home">
-          <HomePage currentList={currentList} />
-        </Route>
-        <Route path="/dishes">
-          <DishesAllPage
-            dishes={allDishes}
-            onToggleItem={(newDishes) => setAllDishes(newDishes)}
-            onCreate={(listName) => createIngredientList(listName)}
-            onClose={() => resetSelectedDishes()}
-          />
-        </Route>
-        <Route path="/lists/current">
-          <ShoppingListPage
-            currentList={currentList}
-            onCheckItem={(updatedItems) => updateCurrentList(updatedItems)}
-          />
-        </Route>
-        <Route path="/addItems">
-          <AddItemsPage
-            currentList={currentList}
-            updateCurrentList={(updatedList) => setCurrentList(updatedList)}
-          />
-        </Route>
-      </Switch>
+      <AppStateContext.Provider value={{ state, setState }}>
+        <UserContext.Provider
+          value={{
+            user,
+            setUser,
+            currentList,
+            setCurrentList,
+            updateCurrentList,
+          }}>
+          <Switch>
+            <Route exact path="/">
+              <PreloaderPage />
+            </Route>
+            <ProtectedRoute path="/home" isAuthorized={isAuthorized}>
+              <HomePage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/dishes" isAuthorized={isAuthorized}>
+              <DishSelectionPage
+                dishes={allDishes}
+                onToggleItem={(newDishes) => setAllDishes(newDishes)}
+                onCreate={(listName) => createIngredientList(listName)}
+                onClose={() => resetSelectedDishes()}
+              />
+            </ProtectedRoute>
+            <ProtectedRoute path="/lists/current" isAuthorized={isAuthorized}>
+              <ShoppingListPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/addItems" isAuthorized={isAuthorized}>
+              <AddItemsPage />
+            </ProtectedRoute>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+          </Switch>
+        </UserContext.Provider>
+      </AppStateContext.Provider>
     </div>
   )
 
@@ -109,7 +114,10 @@ function App() {
       items: ingredientList,
       active: true,
     }
-    updateList({ ...currentList, active: false }, currentList.id)
+    if (currentList) {
+      updateList({ ...currentList, active: false }, currentList.id)
+    }
+
     resetSelectedDishes()
     createList(listObject)
   }
@@ -121,7 +129,7 @@ function App() {
     await setCurrentList(listObject)
 
     notifier({
-      description: 'Created a List with the ID: ' + listObject.id,
+      description: 'Neue Liste erstellt mit der Nr.: ' + listObject.id,
       status: 'success',
       duration: 2000,
       isClosable: true,

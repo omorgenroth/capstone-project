@@ -19,6 +19,7 @@ export default function FloatingButton({ onClick }) {
         color="primaryBlue.500"
         boxShadow="sm"
         icon={<AddIcon />}
+        data-testid="floating-button"
       />
     </>
   )
