@@ -1,6 +1,16 @@
-import { Box, chakra, Container, Flex, Input, Spinner } from '@chakra-ui/react'
+import {
+  Box,
+  chakra,
+  Container,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Spinner,
+} from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
+import { Search2Icon } from '@chakra-ui/icons'
 
 AddItemHeader.propTypes = {
   counter: PropTypes.number,
@@ -36,17 +46,23 @@ export default function AddItemHeader({
         <CloseIcon boxSize="22px" />
       </Container>
       <Container>
-        <Input
-          id="searchvalue"
-          placeholder="Starte eine Suche.."
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          textAlign="center"
-          bg="white"
-          color="primaryBlue.500"
-          w="20ch"
-          h="25px"
-        />
+        <InputGroup pos="relative">
+          <InputLeftElement opacity="0.6">
+            <Search2Icon pos="fixed" top="20px" />
+          </InputLeftElement>
+          <Input
+            fontSize="0.9rem"
+            id="searchvalue"
+            placeholder="Starte eine Suche"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            textAlign="left"
+            bg="white"
+            color="primaryBlue.500"
+            w="25ch"
+            h="25px"
+          />
+        </InputGroup>
       </Container>
       <Container onClick={onCreate} color="primaryBlue.500" ml="20px">
         {loading ? (

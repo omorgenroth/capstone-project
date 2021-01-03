@@ -5,6 +5,4 @@ export default function useAuth() {
   const [isAuthorized, setIsAuthorized] = useState()
 
   const userData = loadLocally('userData')
-
-  console.log(userData)
 }

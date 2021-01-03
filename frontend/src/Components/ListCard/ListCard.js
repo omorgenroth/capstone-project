@@ -38,7 +38,7 @@ export default function ListCard({ currentList, onClick }) {
         </Flex>
         <Progress colorScheme="teal" value={done} max={total} m="5px" />
         <Text fontSize="xs" textAlign="right" mt="20px">
-          created: {date}
+          erstellt: {date}
         </Text>
       </Box>
     )

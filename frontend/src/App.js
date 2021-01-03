@@ -6,12 +6,12 @@ import UserContext from './context/UserContext'
 import useDishes from './hooks/useDishes'
 import useLists from './hooks/useLists'
 import { addIsSelectedValue, sortByName } from './lib/lib'
-import AddItemsPage from './domain/AddItems/AddItemsPage'
-import DishesAllPage from './domain/Dishes/DishSelectionPage'
-import HomePage from './pages/HomePage'
-import LandingPage from './pages/LandingPage'
-import LoginPage from './domain/Login/LoginPage'
-import ShoppingListPage from './domain/ShoppingList/ShoppingListPage'
+import AddItemsPage from './pages/AddItems/AddItemsPage'
+import DishSelectionPage from './pages/Dishes/DishSelectionPage'
+import HomePage from './pages/Home/HomePage'
+import PreloaderPage from './pages/Preloader/PreloaderPage'
+import LoginPage from './pages/Login/LoginPage'
+import ShoppingListPage from './pages/ShoppingList/ShoppingListPage'
 import ProtectedRoute from './ProtectedRoute'
 import { saveList, updateList } from './services/fetchLists'
 
@@ -52,13 +52,13 @@ function App() {
           }}>
           <Switch>
             <Route exact path="/">
-              <LandingPage />
+              <PreloaderPage />
             </Route>
             <ProtectedRoute path="/home" isAuthorized={isAuthorized}>
               <HomePage />
             </ProtectedRoute>
             <ProtectedRoute path="/dishes" isAuthorized={isAuthorized}>
-              <DishesAllPage
+              <DishSelectionPage
                 dishes={allDishes}
                 onToggleItem={(newDishes) => setAllDishes(newDishes)}
                 onCreate={(listName) => createIngredientList(listName)}
@@ -129,7 +129,7 @@ function App() {
     await setCurrentList(listObject)
 
     notifier({
-      description: 'Created a List with the ID: ' + listObject.id,
+      description: 'Neue Liste erstellt mit der Nr.: ' + listObject.id,
       status: 'success',
       duration: 2000,
       isClosable: true,

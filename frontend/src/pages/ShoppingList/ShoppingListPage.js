@@ -18,11 +18,6 @@ import { useHistory } from 'react-router-dom'
 import { useContext } from 'react'
 import UserContext from '../../context/UserContext'
 
-ShoppingListPage.propTypes = {
-  currentList: PropTypes.object.isRequired,
-  onCheckItem: PropTypes.func.isRequired,
-}
-
 export default function ShoppingListPage() {
   const { currentList, updateCurrentList } = useContext(UserContext)
   const history = useHistory()
@@ -98,7 +93,7 @@ export default function ShoppingListPage() {
       ...newIngredients[elIndex],
       isSelected: !newIngredients[elIndex].isSelected,
     }
-    console.log(newIngredients)
+
     updateCurrentList(newIngredients)
   }
 }

@@ -38,10 +38,10 @@ export default function NavigationBar({ route }) {
         <ListIcon boxSize="25px" />
       </NavLink>
       <NavLink
-        to="/"
+        to="/lists/archive"
         route={route}
         color="primaryBlue.500"
-        opacity={route === 'nope' ? '1' : '0.7'}>
+        opacity={route === 'archive' ? '1' : '0.7'}>
         <ArchiveIcon boxSize="25px" />
       </NavLink>
     </Flex>

@@ -5,11 +5,9 @@ import UserContext from '../context/UserContext'
 
 export default function useLists() {
   const { user } = useContext(UserContext)
-
   const [currentList, setCurrentList] = useState({})
   const [isLoadingLists, setLoadingLists] = useState(true)
 
-  console.log(user)
   useEffect(() => {
     if (user !== undefined) {
       getActiveUserList(user.id)

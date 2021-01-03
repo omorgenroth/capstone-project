@@ -1,4 +1,5 @@
 import {
+  Flex,
   Box,
   Button,
   FormControl,
@@ -18,6 +19,7 @@ import {
   TagLabel,
   Text,
   useDisclosure,
+  Divider,
 } from '@chakra-ui/react'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -26,6 +28,7 @@ import SearchResultItem from './SearchResultItem/SearchResultItem'
 import UserContext from '../../context/UserContext'
 import { filterIngredientsByName } from '../../services/fetchIngredients'
 import { updateList } from '../../services/fetchLists'
+import { InfoOutlineIcon } from '@chakra-ui/icons'
 
 export default function AddItemsPage() {
   const { currentList } = useContext(UserContext)
@@ -40,14 +43,15 @@ export default function AddItemsPage() {
   const selection = useRef(null)
   const history = useHistory()
 
-  console.log(searchValue)
-
   useEffect(() => {
     const delay = setTimeout(() => {
-      if (searchValue.trim() !== '')
+      if (searchValue.trim() !== '') {
         filterIngredientsByName(searchValue).then((res) =>
           setSearchResults(res)
         )
+      } else {
+        setSearchResults('')
+      }
     }, 500)
     return () => clearTimeout(delay)
   }, [searchValue])
@@ -65,10 +69,6 @@ export default function AddItemsPage() {
 
       <Box gridRow="2/3">
         <Box mt="20px" px="15px">
-          <Text fontWeight="700" py="10px">
-            Ergebnisse:
-          </Text>
-
           {searchResults.length > 0 ? (
             searchResults.map((result) => {
               return (
@@ -81,10 +81,16 @@ export default function AddItemsPage() {
               )
             })
           ) : (
-            <div> </div>
+            <Flex>
+              <InfoOutlineIcon m="5px" />
+              <Text fontSize="0.8rem">
+                Suche nach zusätzlichen Zutaten und füge Sie hinzu{' '}
+              </Text>
+            </Flex>
           )}
         </Box>
-        <Box>
+        <Box px="15px">
+          <Divider my="20px" />
           {newItems &&
             newItems.map((item) => {
               return (
@@ -114,18 +120,20 @@ export default function AddItemsPage() {
           <ModalBody>
             <FormControl>
               <FormLabel>
-                {selection.current && selection.current.name}
+                {selection.current &&
+                  selection.current.name +
+                    ' ( ' +
+                    selection.current.unit +
+                    ' )'}
               </FormLabel>
               <NumberInput id="quantity" name="quantity">
                 <NumberInputField
                   size="xs"
                   width="8ch"
                   maxLength="4ch"
-                  placeholder="f.e. 300"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
-                <div> {selection.current && selection.current.unit}</div>
               </NumberInput>
             </FormControl>
           </ModalBody>
@@ -176,7 +184,6 @@ export default function AddItemsPage() {
 
     setLoading(true)
     updateList(currentList, currentList.id)
-      .then((res) => console.log(res))
       .then(() => setLoading(false))
       .then(() => history.push('/lists/current'))
   }

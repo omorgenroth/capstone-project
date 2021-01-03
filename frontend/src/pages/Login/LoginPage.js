@@ -1,4 +1,4 @@
-import { Box, chakra, Flex, Heading } from '@chakra-ui/react'
+import { Box, chakra, Flex, Heading, Image } from '@chakra-ui/react'
 import { useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import AppStateContext from '../../context/AppStateContext'
@@ -7,6 +7,7 @@ import { loginUser } from '../../services/fetchAuthentication'
 import { getActiveUserList, getUserById } from '../../services/fetchUsers'
 import { saveLocally } from '../../services/localStorage'
 import LoginForm from './LoginForm/LoginForm'
+import logo from '../../assets/logo.png'
 
 export default function LoginPage() {
   const CreateAccountLink = chakra(Link)
@@ -24,6 +25,7 @@ export default function LoginPage() {
       height="100vh"
       bg="primaryGreen.500"
       color="primaryBlue.500">
+      <Image src={logo} alt="" width="40%" pos="fixed" top="20px" />
       <Box p={2} border="1px solid white" borderRadius="10px">
         <Box textAlign="center">
           <Heading>Login</Heading>

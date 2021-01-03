@@ -1,11 +1,11 @@
 import { Flex, Image } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import logo from '../../assets/logo.png'
 import PropTypes from 'prop-types'
-import { loadLocally } from '../services/localStorage'
-import { getActiveUserList, getUserById } from '../services/fetchUsers'
+import { loadLocally } from '../../services/localStorage'
+import { getActiveUserList, getUserById } from '../../services/fetchUsers'
 import { useContext } from 'react'
-import UserContext from '../context/UserContext'
+import UserContext from '../../context/UserContext'
 
 LandingPage.propTypes = {
   loading: PropTypes.bool,
@@ -17,7 +17,6 @@ export default function LandingPage({ error }) {
   const { setUser, setCurrentList } = useContext(UserContext)
 
   const tokenData = loadLocally('userData')
-  console.log(tokenData)
 
   if (tokenData === null) {
     history.push('login')

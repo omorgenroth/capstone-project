@@ -11,9 +11,11 @@ import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import logoSmall from '../../assets/logo_sm.png'
 import UserContext from '../../context/UserContext'
+import AppStateContext from '../../context/AppStateContext'
 
 export default function Header() {
   const { user } = useContext(UserContext)
+  const { state, setState } = useContext(AppStateContext)
   const history = useHistory()
 
   return (
@@ -46,5 +48,6 @@ export default function Header() {
   function logoutUser() {
     localStorage.removeItem('userData')
     history.push('/login')
+    setState('')
   }
 }

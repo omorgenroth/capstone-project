@@ -40,9 +40,9 @@ export default function LoginForm({ state, submitData }) {
         mt={4}
         type="submit"
         isLoading={state === 'loading' ? true : false}
-        loadingText="Submitting"
+        loadingText="Übermittle Daten"
         onClick={(e) => handleSubmit(e)}>
-        Sign In
+        Einloggen
       </Button>
     </chakra.form>
   )
